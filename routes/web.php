@@ -22,13 +22,13 @@ Route::get('/dashboard', [DashboardController::class, 'showDash'])->name('dashbo
 Route::get('/halaman', [HalamanController::class, 'showForm'])->name('halaman');
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/kerjasama', [KerjasamaController::class, 'adminForm'])->name('kerjasama');
+    Route::get('/kerjasama', [KerjasamaController::class, 'admin'])->name('kerjasama');
     Route::get('/bagi-sampah', [BagiSampahController::class, 'adminForm'])->name('bagisampah');
 });
 
 
 Route::prefix('pemasok')->name('pemasok.')->group(function () {
-    Route::get('/kerjasama', [KerjasamaController::class, 'showForm'])->name('kerjasama');
+    Route::get('/kerjasama', [KerjasamaController::class, 'pemasok'])->name('kerjasama');
     Route::get('/bagi-sampah', [BagiSampahController::class, 'showForm'])->name('bagisampah'); //
 });
 

@@ -6,7 +6,7 @@
 
 
 
-@include('components.navbar-auth')
+@include('components.navbar-pemasok')
 
 <section class="relative h-[85vh] bg-cover bg-center flex items-center justify-start" style="background-image: url('{{asset('assets/halaman2.png')}}');">
   <div class="absolute inset-0 bg-black opacity-30"></div> <!-- Overlay gelap -->

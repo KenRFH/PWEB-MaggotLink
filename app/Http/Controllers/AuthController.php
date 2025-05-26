@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Supplier;
 use App\Models\Admin;
+use App\Models\Alamat;
+use App\Models\DetailAlamat;
+use App\Models\Kecamatan;
+use Illuminate\View\View;
+
 
 class AuthController extends Controller
 {
@@ -52,26 +57,50 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-     public function showRegis()
+     public function showRegis(): View
     {
-        return view('auth.register');
+        $kecamatans = Kecamatan::all();
+
+        return view('auth.register', compact('kecamatans'));
     }
 
     public function register(Request $request)
     {
-        $validatedData = $request->validate([
-            'email' => 'required|email|unique:supplier',
-            'password' => 'required|min:6',
-            'phone_number' => 'required|min:6',
-            'address' => 'required'
-        ]);
 
-        $supplier = Supplier::create([
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-            'phone_number' => $validatedData['phone_number'],
-            'address' => $validatedData['address'],
-        ]);
+
+
+    $validatedData = $request->validate([
+        'email' => 'required|email|unique:supplier',
+        'password' => 'required|min:6',
+        'phone_number' => 'required|min:6',
+        'alamat' => 'required',
+        'kecamatan_id' => 'required|exists:kecamatan,id',
+    ]);
+$supplier = Supplier::create([
+        'email' => $validatedData['email'],
+        'password' => Hash::make($validatedData['password']),
+        'phone_number' => $validatedData['phone_number'],
+    ]);
+
+    $alamat = Alamat::create([
+        'jalan' => $validatedData['alamat'], // ← cocokkan field dari form
+        'kecamatan_id' => $validatedData['kecamatan_id'],
+        'supplier_id' => $supplier->id, // ← pastikan kalau kolom ini memang ada
+    ]);
+
+    DetailAlamat::create([
+        'supplier_id' => $supplier->id,
+        'alamat_id' => $alamat->id,
+    ]);
+
+    Auth::guard('supplier')->login($supplier);
+
+    return redirect()->route('halaman');
+
+
+
+
+
 
         // Login langsung setelah registrasi berhasil
         Auth::guard('supplier')->login($supplier);

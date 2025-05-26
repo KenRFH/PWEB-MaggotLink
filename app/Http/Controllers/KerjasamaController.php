@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 class KerjasamaController extends Controller
 {
-    public function showForm()
+    public function pemasok()
     {
         return view('kerjasama');
     }
-    public function adminForm()
+    public function admin()
     {
         return view('kerjasama');
     }
