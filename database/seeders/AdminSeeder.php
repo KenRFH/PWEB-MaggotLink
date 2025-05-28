@@ -23,7 +23,7 @@ class AdminSeeder extends Seeder
             'email' => 'admin@test',
             'password' => Hash::make('password123'), // enkripsi password
             'address' => 'Jl. Contoh No. 123',
-            'profile_picture' => '',
+            'gambar' => '',
             'phone_number' => '081234567890',
             'created_at' => now(),
             'updated_at' => now(),

@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title', 'Halaman')
-@include('components.navbar-auth')
+@include('components.navbar-admin')
 @section('content')
 
 <section class="bg-slate-200">

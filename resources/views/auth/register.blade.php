@@ -27,6 +27,11 @@
                 class="bg-white w-full max-w-md p-10 rounded-2xl space-y-6">
                 @csrf
 
+                <div>
+                    <label class="text-sm font-light text-gray-700 mb-1 block">Nama Perusahaan</label>
+                    <input type="text" name="name_company" placeholder="Masukkan Nama Perusahaan"
+                        class="w-full p-2 border border-gray-300 rounded" required>
+                </div>
                 <!-- Email -->
                 <div>
                     <label class="text-sm font-light text-gray-700 mb-1 block">Email</label>
@@ -42,37 +47,14 @@
                 </div>
 
                 <!-- Nomor Telepon -->
-                <div>
-                    <label class="text-sm font-light text-gray-700 mb-1 block">Nomor Telepon</label>
-                    <input type="text" name="phone_number" placeholder="Masukkan Nomor Telepon"
-                        class="w-full p-2 border border-gray-300 rounded" required>
-                </div>
+
 
                 <!-- Nama Perusahaan -->
-                {{-- <div>
-          <label class="text-sm font-light text-gray-700 mb-1 block">Nama Perusahaan</label>
-          <input type="text" name="name_company" placeholder="Masukkan Nama Perusahaan"
-                 class="w-full p-2 border border-gray-300 rounded" required>
-        </div> --}}
 
-                <!-- Alamat -->
-                <div>
-                    <label class="text-sm font-light text-gray-700 mb-1 block">Alamat</label>
-                    <textarea name="alamat" placeholder="Masukkan Alamat" class="w-full p-2 border border-gray-300 rounded" required></textarea>
-                </div>
-                <div class="mt-6"> {{-- Adjusted margin for better spacing --}}
-                    <label for="district" class="block mb-2 font-semibold">Kecamatan</label>
-                    <select name="kecamatan_id" id="district"
-                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-chartreuse"
-                        required>
-                        <option value="">Pilih Kecamatan</option>
-                        @foreach ($kecamatans as $kecamatan)
-                            <option value="{{ $kecamatan->id }}"
-                                {{ old('kecamatan') == $kecamatan->id ? 'selected' : '' }}>{{ $kecamatan->nama }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+
+
+
+
 
                 <!-- Tombol Registrasi -->
                 <div class="flex justify-end">

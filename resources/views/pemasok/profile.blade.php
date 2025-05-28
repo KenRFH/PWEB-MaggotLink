@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title', 'Profile')
-@include('components.navbar-auth')
+@include('components.navbar-pemasok')
 @section('content')
 <div class="p-10 h-[700px]">
 
@@ -18,7 +18,6 @@
         <div class="mt-6 space-y-2">
             <p><strong>Nama Perusahaan:</strong> {{ $user->name_company }}</p>
             <p><strong>No HP:</strong> {{ $user->phone_number }}</p>
-            <p><strong>Alamat:</strong> {{ $user->address }}</p>
         </div>
 
         <div class="mt-6 text-center">
@@ -53,11 +52,6 @@
                         value="{{ old('phone_number', $user->phone_number) }}" class="border p-2 rounded w-full" />
                 </div>
 
-                <div>
-                    <label class="block font-semibold">Alamat</label>
-                    <input type="text" name="address" value="{{ old('address', $user->address) }}"
-                        class="border p-2 rounded w-full" />
-                </div>
 
                 <div>
                     <label class="block font-semibold">Password Baru</label>
@@ -93,4 +87,7 @@
         </form>
     </div>
 </div>
+@include('components.footer')
 @endsection
+
+

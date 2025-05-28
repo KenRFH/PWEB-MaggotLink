@@ -19,8 +19,10 @@
       Kerja sama
     </button>
   </div>
+
 </section>
 
 
+  @include('components.footer')
 @endsection
 

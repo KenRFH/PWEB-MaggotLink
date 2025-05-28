@@ -70,40 +70,23 @@ class AuthController extends Controller
 
 
     $validatedData = $request->validate([
-        'email' => 'required|email|unique:supplier',
+        'name_company' => 'required|string|max:255',
+        'email' => 'required|email|unique:supplier,email',
         'password' => 'required|min:6',
-        'phone_number' => 'required|min:6',
-        'alamat' => 'required',
-        'kecamatan_id' => 'required|exists:kecamatan,id',
     ]);
-$supplier = Supplier::create([
+
+    $supplier = Supplier::create([
+        'name_company' => $validatedData['name_company'],
         'email' => $validatedData['email'],
         'password' => Hash::make($validatedData['password']),
-        'phone_number' => $validatedData['phone_number'],
     ]);
 
-    $alamat = Alamat::create([
-        'jalan' => $validatedData['alamat'], // ← cocokkan field dari form
-        'kecamatan_id' => $validatedData['kecamatan_id'],
-        'supplier_id' => $supplier->id, // ← pastikan kalau kolom ini memang ada
-    ]);
-
-    DetailAlamat::create([
-        'supplier_id' => $supplier->id,
-        'alamat_id' => $alamat->id,
-    ]);
-
+    // Login langsung setelah registrasi
     Auth::guard('supplier')->login($supplier);
 
-    return redirect()->route('halaman');
-
-
-
-
-
+    return redirect()->route('showLogin');
 
         // Login langsung setelah registrasi berhasil
-        Auth::guard('supplier')->login($supplier);
-return redirect()->route('halaman');
+
     }
 }

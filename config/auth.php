@@ -15,24 +15,21 @@ return [
 'guards' => [
     'admin' => [
         'driver' => 'session',
-        'provider' => 'admins',
+        'provider' => 'admin',
     ],
     'supplier' => [
         'driver' => 'session',
-        'provider' => 'suppliers',
+        'provider' => 'supplier',
     ],
 ],
 
 'providers' => [
-    'users' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\User::class,
-    ],
-    'admins' => [
+
+    'admin' => [
         'driver' => 'eloquent',
         'model' => App\Models\Admin::class,
     ],
-    'suppliers' => [
+    'supplier' => [
         'driver' => 'eloquent',
         'model' => App\Models\Supplier::class,
     ],

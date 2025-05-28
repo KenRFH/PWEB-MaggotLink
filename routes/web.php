@@ -21,17 +21,12 @@ Route::get('/dashboard', [DashboardController::class, 'showDash'])->name('dashbo
 // halaman pemasok
 Route::get('/halaman', [HalamanController::class, 'showForm'])->name('halaman');
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/kerjasama', [KerjasamaController::class, 'admin'])->name('kerjasama');
-    Route::get('/bagi-sampah', [BagiSampahController::class, 'adminForm'])->name('bagisampah');
-});
 
 
-Route::prefix('pemasok')->name('pemasok.')->group(function () {
-    Route::get('/kerjasama', [KerjasamaController::class, 'pemasok'])->name('kerjasama');
-    Route::get('/bagi-sampah', [BagiSampahController::class, 'showForm'])->name('bagisampah'); //
-});
 
+
+Route::get('/kerjasama', [KerjasamaController::class, 'create'])->name('kerjasama');
+Route::post('/kerjasama', [KerjasamaController::class, 'store'])->name('kerjasama.store');
 
 
 
@@ -40,4 +35,10 @@ Route::prefix('pemasok')->name('pemasok.')->group(function () {
 Route::middleware(['auth:admin,supplier'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'showForm'])->name('profile');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('/admin/kerjasama', [KerjasamaController::class, 'index'])->name('admin.kerjasama.index');
+    Route::post('/admin/kerjasama/{id}/approve', [KerjasamaController::class, 'approve'])->name('admin.kerjasama.approve');
+    Route::post('/admin/kerjasama/{id}/reject', [KerjasamaController::class, 'reject'])->name('admin.kerjasama.reject');
 });

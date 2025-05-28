@@ -10,54 +10,65 @@ use Illuminate\Support\Facades\Hash;
 class ProfileController extends Controller
 {
     public function showForm()
-    {
-        $user = Auth::guard('supplier')->check() ? Auth::guard('supplier')->user() : Auth::guard('admin')->user();
-        if (!$user) return redirect()->route('login');
-
-        return view('profile', compact('user'));
+{
+    if (Auth::guard('admin')->check()) {
+        $user = Auth::guard('admin')->user();
+        return view('admin.profile', compact('user'));
     }
+
+    if (Auth::guard('supplier')->check()) {
+        $user = Auth::guard('supplier')->user();
+        return view('pemasok.profile', compact('user'));
+    }
+
+    // Kalau tidak ada yang login, redirect ke login
+    return redirect()->route('login');
+}
+
 
     public function update(Request $request)
 {
-    // Ambil user yang sedang login
-    $user = Auth::guard('supplier')->user() ?? Auth::guard('admin')->user();
+    if (Auth::guard('admin')->check()) {
+        $user = Auth::guard('admin')->user();
 
-    if (!$user) {
-        return redirect()->route('login');
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'password' => 'nullable|min:6|confirmed',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $user->nama = $validated['nama'];
+
+    } elseif (Auth::guard('supplier')->check()) {
+        $user = Auth::guard('supplier')->user();
+
+        $validated = $request->validate([
+            'name_company' => 'required|string|max:255',
+            'phone_number' => 'nullable|string|max:20',
+            'password' => 'nullable|min:6|confirmed',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $user->name_company = $validated['name_company'];
+        $user->phone_number = $validated['phone_number'];
     }
 
-    // Validasi
-    $validatedData = $request->validate([
-        'name_company' => 'nullable|string|max:255',
-        'phone_number' => 'nullable|string',
-        'address' => 'nullable|string|max:255',
-        'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'password' => 'nullable|string|min:6|confirmed',
-    ]);
-
-    // Update password hanya jika diisi
-    if (!empty($validatedData['password'])) {
-        $user->password = Hash::make($validatedData['password']);
+    // Update password jika diisi
+    if (!empty($validated['password'])) {
+        $user->password = Hash::make($validated['password']);
     }
 
-    // Update field lain
-    $user->name_company = $validatedData['name_company'] ?? $user->name_company;
-    $user->phone_number = $validatedData['phone_number'] ?? $user->phone_number;
-    $user->address = $validatedData['address'] ?? $user->address;
-
-    // Handle upload gambar baru
+    // ✅ Upload gambar jika ada
     if ($request->hasFile('gambar')) {
-        $gambar = $request->file('gambar');
-        $gambarName = time() . '_' . $gambar->getClientOriginalName();
-        $gambar->move(public_path('uploads/profile'), $gambarName);
-        $user->gambar = 'uploads/profile/' . $gambarName;
+        $path = $request->file('gambar')->store('uploads', 'public');
+        $user->gambar = 'storage/' . $path; // agar bisa dipanggil pakai asset()
     }
 
-    // Simpan perubahan
     $user->save();
 
-    return redirect()->back()->with('success', 'Profile berhasil diupdate.');
+    return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
 }
 
-}
 
+
+}
