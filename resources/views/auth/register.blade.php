@@ -42,9 +42,11 @@
                 <!-- Password -->
                 <div>
                     <label class="text-sm font-light text-gray-700 mb-1 block">Password</label>
-                    <input type="password" name="password" placeholder="Masukkan Password"
+                    <input id="password" type="password" name="password" placeholder="Masukkan Password"
                         class="w-full p-2 border border-gray-300 rounded" required>
                 </div>
+                <input type="checkbox" id="showPassword" class="mr-2">
+                <label for="showPassword" class="text-sm">Tampilkan kata sandi</label>
 
                 <!-- Nomor Telepon -->
 
@@ -74,6 +76,16 @@
         </div>
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const showPasswordCheckbox = document.getElementById('showPassword');
+            const passwordInput = document.getElementById('password');
+
+            showPasswordCheckbox.addEventListener('change', function() {
+                passwordInput.type = this.checked ? 'text' : 'password';
+            });
+        });
+    </script>
 </body>
 
 </html>

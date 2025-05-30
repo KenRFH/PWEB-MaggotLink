@@ -18,6 +18,7 @@
         <div class="mt-6 space-y-2">
             <p><strong>Nama Perusahaan:</strong> {{ $user->name_company }}</p>
             <p><strong>No HP:</strong> {{ $user->phone_number }}</p>
+            <p><strong>Alamat:</strong> {{ $user->alamat }}</p>
         </div>
 
         <div class="mt-6 text-center">
@@ -50,6 +51,11 @@
                     <label class="block font-semibold">No HP</label>
                     <input type="text" name="phone_number"
                         value="{{ old('phone_number', $user->phone_number) }}" class="border p-2 rounded w-full" />
+                </div>
+                <div>
+                    <label class="block font-semibold">Alamat</label>
+                    <input type="text" name="alamat"
+                        value="{{ old('alamat', $user->alamat) }}" class="border p-2 rounded w-full" />
                 </div>
 
 

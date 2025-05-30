@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Kerjasama;
 use App\Models\Kecamatan;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class KerjasamaController extends Controller
 {
@@ -47,7 +48,7 @@ class KerjasamaController extends Controller
     ]);
 
     $path = $request->file('file_mou')->store('mou', 'public');
-
+    $supplier = auth()->guard('supplier')->user();
     Kerjasama::create([
     'supplier_id' => auth()->guard('supplier')->user()->id,
     'nama' => $request->nama,
@@ -59,7 +60,8 @@ class KerjasamaController extends Controller
     'catatan' => $request->catatan,
     'status' => 'pending', // tambahkan ini
 ]);
-
+ $supplier->alamat = $request->alamat;
+    $supplier->save();
     return redirect()->route('halaman')->with('success', 'Pengajuan berhasil disimpan!');
 }
 
@@ -89,6 +91,49 @@ public function reject($id)
 
     return redirect()->back()->with('success', 'Pengajuan ditolak.');
 }
+
+
+
+public function getData()
+{
+    $query = Kerjasama::with('kecamatan');
+
+    return DataTables::of($query)
+        ->addColumn('aksi', function ($pengajuan) {
+            if ($pengajuan->status === 'pending') {
+                $approveUrl = route('admin.kerjasama.approve', $pengajuan->id);
+                $rejectUrl = route('admin.kerjasama.reject', $pengajuan->id);
+
+                return '
+                    <form action="'.$approveUrl.'" method="POST" class="inline">
+                        '.csrf_field().'
+                        <button type="submit" class="text-green-600">Setujui</button>
+                    </form>
+                    <form action="'.$rejectUrl.'" method="POST" class="inline ml-2">
+                        '.csrf_field().'
+                        <button type="submit" class="text-red-600">Tolak</button>
+                    </form>
+                ';
+            } else {
+                return '<span class="text-gray-400 italic">Sudah diproses</span>';
+            }
+        })
+        ->addColumn('file_mou_link', function ($pengajuan) {
+            return '<a href="'.asset('storage/'.$pengajuan->file_mou).'" class="text-blue-500" target="_blank">Lihat PDF</a>';
+        })
+        ->editColumn('status', function ($pengajuan) {
+            if ($pengajuan->status == 'pending') {
+                return '<span class="text-yellow-600">Pending</span>';
+            } elseif ($pengajuan->status == 'approved') {
+                return '<span class="text-green-600">Disetujui</span>';
+            } else {
+                return '<span class="text-red-600">Ditolak</span>';
+            }
+        })
+        ->rawColumns(['aksi', 'file_mou_link', 'status']) // agar HTML tidak di-escape
+        ->make(true);
+}
+
 
 
 }

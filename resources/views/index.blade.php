@@ -8,7 +8,8 @@
 
 @section('content')
 
-    <nav class="flex sticky items-center justify-between px-8 py-6 bg-[#172C1F] shadow-md top-0 left-0 right-0 transition-all duration-500 z-50">
+    <nav
+        class="flex sticky items-center justify-between px-8 py-6 bg-[#172C1F] shadow-md top-0 left-0 right-0 transition-all duration-500 z-50">
         <div>
             <a href="{{ route('showLogin') }}" class="text-xl px-2 py-3 font-bold italic text-white">MaggotLink</a>
         </div>
@@ -64,22 +65,57 @@
         </div>
 
         <!-- Tautan Galeri -->
-        <div class="bg-[#2B4636] p-6 rounded-2xl">
-            <h4 class="text-white text-3xl text-center font-semibold mb-4">Tautan</h4>
-            <div class="grid grid-cols-2 py-4 gap-4">
-                <!-- Gambar Galeri -->
-                <img src="{{ asset('assets/larva.jpg') }}" alt="Peternakan Maggot"
-                    class="rounded-xl w-full h-auto object-cover" />
-                <img src="{{ asset('assets/larva.jpg') }}" alt="Maggot di tangan"
-                    class="rounded-xl w-full h-auto object-cover" />
-                <img src="{{ asset('assets/larva.jpg') }}" alt="Peternakan Maggot"
-                    class="rounded-xl w-full h-auto object-cover" />
-                <img src="{{ asset('assets/larva.jpg') }}" alt="Maggot di tangan"
-                    class="rounded-xl w-full h-auto object-cover" />
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+            <!-- Card 1 -->
+            <div class="bg-[#88A097] p-6 rounded-2xl text-center">
+                <h2 class="text-xl font-bold text-black mb-2">Pemeliharaan Maggot</h2>
+                <p class="text-black mb-4">Apa kalian tau cara memelihara Maggot dengan benar?</p>
+                <div class="w-full aspect-video">
+                    <iframe class="w-full h-full rounded-xl"
+                        src="https://www.youtube.com/embed/UhQfJK2TNTE?si=5WaPjXYRe6909LYd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" title="Video 1" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-[#88A097] p-6 rounded-2xl text-center">
+                <h2 class="text-xl font-bold text-black mb-2">Pemeliharaan Maggot</h2>
+                <p class="text-black mb-4">Apa kalian tau cara memelihara Maggot dengan benar?</p>
+                <div class="w-full aspect-video">
+                    <iframe class="w-full h-full rounded-xl"
+                        src="https://www.youtube.com/embed/UhQfJK2TNTE?si=5WaPjXYRe6909LYd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" title="Video 2" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-[#88A097] p-6 rounded-2xl text-center">
+                <h2 class="text-xl font-bold text-black mb-2">Pemeliharaan Maggot</h2>
+                <p class="text-black mb-4">Apa kalian tau cara memelihara Maggot dengan benar?</p>
+                <div class="w-full aspect-video">
+                    <iframe class="w-full h-full rounded-xl"
+                        src="https://www.youtube.com/embed/UhQfJK2TNTE?si=5WaPjXYRe6909LYd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin " title="Video 3" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
             </div>
         </div>
-    </section>
 
+        </div>
+
+    </section>
+    @include('components.footer')
 
 @endsection
 

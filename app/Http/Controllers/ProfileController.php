@@ -45,12 +45,14 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'name_company' => 'required|string|max:255',
             'phone_number' => 'nullable|string|max:20',
+             'alamat' => 'required|string|max:255',
             'password' => 'nullable|min:6|confirmed',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $user->name_company = $validated['name_company'];
         $user->phone_number = $validated['phone_number'];
+        $user->alamat = $validated['alamat']; // ✅ update alamat
     }
 
     // Update password jika diisi

@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.admin')
 
 @section('title', 'Profile')
 @include('components.navbar-admin')

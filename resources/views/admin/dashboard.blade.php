@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.admin')
 
 @section('title', 'Halaman')
 @include('components.navbar-admin')

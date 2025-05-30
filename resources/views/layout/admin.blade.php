@@ -11,9 +11,9 @@
 <body>
 
 
-    <main class="flex-grow">
+    <div class="flex-1 ml-48 p-4 overflow-auto">
         @yield('content')
-    </main>
+    </div>
 
 
 </body>

@@ -1,9 +1,13 @@
-@extends('layout.master')
-
+@extends('layout.admin')
+@section('title', 'Kerjasama')
+@include('components.navbar-admin')
 @section('content')
-<h2 class="text-xl font-bold mb-4">Daftar Pengajuan Kerjasama</h2>
 
-<table class="table-auto w-full border">
+
+<h2 class="text-xl font-bold mt-10 text-center">Daftar Pengajuan Kerjasama</h2>
+
+<table id="kerjasama-table" class="table table-striped table-hover table-bordered">
+
     <thead>
         <tr>
             <th>Nama</th>
@@ -14,39 +18,32 @@
             <th>Aksi</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach ($pengajuanList as $pengajuan)
-        <tr class="border-t">
-            <td>{{ $pengajuan->nama }}</td>
-            <td>{{ $pengajuan->name_company }}</td>
-            <td>{{ $pengajuan->kecamatan->nama ?? '-' }}</td>
-            <td>
-                @if ($pengajuan->status == 'pending')
-                    <span class="text-yellow-600">Pending</span>
-                @elseif ($pengajuan->status == 'approved')
-                    <span class="text-green-600">Disetujui</span>
-                @else
-                    <span class="text-red-600">Ditolak</span>
-                @endif
-            </td>
-            <td><a href="{{ asset('storage/' . $pengajuan->file_mou) }}" class="text-blue-500" target="_blank">Lihat PDF</a></td>
-            <td>
-                @if ($pengajuan->status == 'pending')
-                <form action="{{ route('admin.kerjasama.approve', $pengajuan->id) }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="text-green-600">Setujui</button>
-                </form>
-
-                <form action="{{ route('admin.kerjasama.reject', $pengajuan->id) }}" method="POST" class="inline ml-2">
-                    @csrf
-                    <button type="submit" class="text-red-600">Tolak</button>
-                </form>
-                @else
-                    <span class="text-gray-400 italic">Sudah diproses</span>
-                @endif
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
 </table>
+
+{{-- Tambahkan CDN DataTables --}}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#kerjasama-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: '{{ route('admin.kerjasama.data') }}',
+    columns: [
+        { data: 'nama', name: 'nama' },
+        { data: 'name_company', name: 'name_company' },
+        { data: 'kecamatan.nama', name: 'kecamatan.nama', defaultContent: '-' },
+        { data: 'status', name: 'status' },
+        { data: 'file_mou_link', name: 'file_mou_link', orderable: false, searchable: false },
+        { data: 'aksi', name: 'aksi', orderable: false, searchable: false }
+    ]
+});
+
+});
+</script>
+
+
 @endsection

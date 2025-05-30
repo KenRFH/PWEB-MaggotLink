@@ -56,6 +56,8 @@
                         </svg>
                         <input id="password" name="password" type="password" placeholder="Password" required
                             class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                              <input type="checkbox" id="showPassword" class="mr-2">
+                    <label for="showPassword" class="text-sm">Tampilkan kata sandi</label>
                     </div>
                 </div>
 
@@ -82,7 +84,16 @@
             </form>
         </div>
     </div>
+  <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const showPasswordCheckbox = document.getElementById('showPassword');
+            const passwordInput = document.getElementById('password');
 
+            showPasswordCheckbox.addEventListener('change', function() {
+                passwordInput.type = this.checked ? 'text' : 'password';
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -41,4 +41,6 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/kerjasama', [KerjasamaController::class, 'index'])->name('admin.kerjasama.index');
     Route::post('/admin/kerjasama/{id}/approve', [KerjasamaController::class, 'approve'])->name('admin.kerjasama.approve');
     Route::post('/admin/kerjasama/{id}/reject', [KerjasamaController::class, 'reject'])->name('admin.kerjasama.reject');
+    Route::get('/admin/kerjasama/data', [KerjasamaController::class, 'getData'])->name('admin.kerjasama.data');
+
 });
