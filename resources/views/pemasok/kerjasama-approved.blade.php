@@ -18,9 +18,8 @@
     </div>
     <h2 class="text-lg font-semibold text-gray-800 mb-2">Selamat! Pengajuan kerja sama anda telah disetujui</h2>
     <p class="text-sm text-gray-600 mb-6">Selanjutnya, anda akan menampilkan halaman pemasok</p>
-    <button class="bg-black text-white py-2 px-5 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 transition">
-      Lanjutkan
-    </button>
+     <a href="{{route('bagisampah')}}"class="bg-black text-white py-2 px-5 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 transition">Lanjutkan</a>
+
   </div>
 </div>
 

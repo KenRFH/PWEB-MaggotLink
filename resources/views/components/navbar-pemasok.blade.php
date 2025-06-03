@@ -5,6 +5,6 @@
     <div class="space-x-6 text-white font-semibold">
         <a href="{{ route('halaman') }}">Home</a>
         <a href="{{ route('kerjasama') }}">Kerjasama</a>
-        <a href="">Bagi Sampah</a>
+        <a href="{{route('bagisampah')}}">Bagi Sampah</a>
     </div>
 </nav>

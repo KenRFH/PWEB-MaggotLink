@@ -17,7 +17,7 @@
 
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-bold">Kerja Sama</h2>
-            <a href="{{ asset('template/mou_template.pdf') }}" target="_blank"
+            <a href="{{ asset('template/Mou_MaggotLink.pdf') }}" target="_blank"
                 class="bg-black text-white px-4 py-2 rounded-lg flex items-center gap-2 border-2 border-transparent hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500">
                 Download
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"

@@ -25,8 +25,8 @@ class DetailAlamat extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    // public function penjadwalan()
-    // {
-    //     return $this->hasMany(Penjadwalan::class);
-    // }
+    public function penjadwalan()
+    {
+        return $this->hasMany(Penjadwalan::class);
+    }
 }

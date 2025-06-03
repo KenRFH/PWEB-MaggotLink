@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website - @yield('title')</title>
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 
 <body>
@@ -16,6 +18,8 @@
     </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@stack('scripts')
 </body>
 
 </html>

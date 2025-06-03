@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pickup_schedule', function (Blueprint $table) {
+        Schema::create('jadwal_admins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("id_supplier")->constrained("supplier");
-            $table->date("date");
-            $table->enum('application_status',['pending','approved','rejected']);
-            $table->date("notes");
+            $table->date('tanggal');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pickup_schedule');
+        Schema::dropIfExists('jadwal_admins');
     }
 };

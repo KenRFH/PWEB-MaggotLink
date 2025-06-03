@@ -21,9 +21,12 @@ Route::get('/dashboard', [DashboardController::class, 'showDash'])->name('dashbo
 // halaman pemasok
 Route::get('/halaman', [HalamanController::class, 'showForm'])->name('halaman');
 
+Route::get('/bagisampah', [BagiSampahController::class, 'index'])->name('bagisampah');
+Route::post('/bagisampah', [BagiSampahController::class, 'jadwalStore'])->name('bagisampah.jadwal');
+Route::post('/bagisampah/delete', [BagiSampahController::class, 'delete'])->name('bagisampah.delete');
 
-
-
+// Supplier
+Route::post('/bagisampah/supplier', [BagiSampahController::class, 'store'])->name('bagisampah.store');
 
 Route::get('/kerjasama', [KerjasamaController::class, 'create'])->name('kerjasama');
 Route::post('/kerjasama', [KerjasamaController::class, 'store'])->name('kerjasama.store');

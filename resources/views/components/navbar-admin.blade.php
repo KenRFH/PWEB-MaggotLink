@@ -9,7 +9,7 @@
         Kerja Sama
     </a>
 
-    <a href="#" class="w-40 py-2 text-center rounded-md bg-[#B6C9C1] font-semibold">Bagi Sampah</a>
+    <a href="{{route('bagisampah')}}" class="w-40 py-2 text-center rounded-md bg-[#B6C9C1] font-semibold">Bagi Sampah</a>
 
     <a href="{{ route('profile') }}" class="w-40 py-2 text-center rounded-md {{ request()->routeIs('profile') ? 'bg-[#6D8F7A] font-bold' : 'bg-[#B6C9C1] font-semibold' }}">
         Profile
