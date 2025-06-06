@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kerjasama;
 use App\Models\Kecamatan;
+use App\Models\DetailAlamat;
+use App\Models\Alamat;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -47,6 +49,13 @@ class KerjasamaController extends Controller
         'catatan' => 'nullable|string',
     ]);
 
+     $alamat = Alamat::firstOrCreate(
+        ['jalan' => $request->alamat,
+        'kecamatan_id' => $request->kecamatan_id]
+
+    );
+
+
     $path = $request->file('file_mou')->store('mou', 'public');
     $supplier = auth()->guard('supplier')->user();
     Kerjasama::create([
@@ -60,6 +69,15 @@ class KerjasamaController extends Controller
     'catatan' => $request->catatan,
     'status' => 'pending', // tambahkan ini
 ]);
+ // Buat atau update alamat di detail_alamat
+    // 3️⃣ Update atau buat `detail_alamat` dan simpan ID, bukan string
+    DetailAlamat::updateOrCreate(
+        ['supplier_id' => $supplier->id],
+        [
+            'alamat_id' => $alamat->id,
+            'kecamatan_id' => $request->kecamatan_id
+        ]
+    );
  $supplier->alamat = $request->alamat;
     $supplier->save();
     return redirect()->route('halaman')->with('success', 'Pengajuan berhasil disimpan!');

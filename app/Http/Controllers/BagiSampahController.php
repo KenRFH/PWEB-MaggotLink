@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JadwalAdmin;
 use App\Models\Kecamatan;
+use App\Models\DetailAlamat;
 use App\Models\Penjadwalan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -41,19 +42,33 @@ class BagiSampahController extends Controller
 
         // Supplier login
         } elseif (auth('supplier')->check()) {
-            $supplier = auth('supplier')->user();
+    $supplier = auth('supplier')->user();
 
-            if (!$supplier) {
-                return abort(403, 'Anda tidak terdaftar sebagai supplier.');
-            }
-
-            $jadwalAdminList = JadwalAdmin::whereDate('tanggal', '>=', $besok)->get();
-
-            return view('pemasok.bagisampah', compact('jadwalAdminList'));
-        }
-
-        return abort(403, 'Unauthorized');
+    if (!$supplier) {
+        return abort(403, 'Anda tidak terdaftar sebagai supplier.');
     }
+    $detailAlamat = DetailAlamat::where('supplier_id', $supplier->id)->first();
+
+if (!$detailAlamat) {
+    return redirect()->back()->withErrors(['error' => 'Alamat Anda belum tersedia. Harap lengkapi terlebih dahulu.']);
+}
+
+
+    $jadwalAdminList = JadwalAdmin::whereDate('tanggal', '>=', $besok)->get();
+
+    // Ambil data penjadwalan milik supplier
+    $penjadwalanSaya = Penjadwalan::with(['jadwalAdmin', 'detailAlamat'])
+    ->whereHas('detailAlamat', function ($query) use ($supplier) {
+        $query->where('supplier_id', $supplier->id);
+    })
+    ->orderByDesc('created_at')
+    ->get();
+
+
+    return view('pemasok.bagisampah', compact('jadwalAdminList', 'penjadwalanSaya'));}
+    }
+
+
 
     public function jadwalStore(Request $request)
     {
@@ -72,7 +87,7 @@ class BagiSampahController extends Controller
 
    public function store(Request $request)
 {
-    
+
     $request->validate([
         'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         'total_berat' => 'required|numeric|min:0.01',

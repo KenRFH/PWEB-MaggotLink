@@ -23,7 +23,7 @@ class Supplier extends Authenticatable
     ];
 
     public function detailAlamat(){
-        return $this->hasMany(DetailAlamat::class);
+        return $this->hasOne(DetailAlamat::class);
     }
 
     public function kerjasama()
