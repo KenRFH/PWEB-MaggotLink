@@ -17,7 +17,7 @@ class KerjaSama extends Model
         'supplier_id',
         'nama',
         'name_company',
-        'alamat',
+        'alamat_id',
         'kecamatan_id',
         'no_telepon',
         'file_mou',
@@ -27,18 +27,20 @@ class KerjaSama extends Model
 
     // Relasi ke user (pemilik pengajuan)
     public function supplier()
-    {
-        return $this->belongsTo(Supplier::class);
-    }
+{
+    return $this->belongsTo(Supplier::class);
+}
 
-    // Relasi ke alamat (misal detail alamat seperti jalan, rt/rw, dll)
+public function kecamatan()
+{
+    return $this->belongsTo(Kecamatan::class);
+}
 
+public function alamat()
+{
+    return $this->belongsTo(Alamat::class);
+}
 
-    // Relasi ke kecamatan
-    public function kecamatan()
-    {
-        return $this->belongsTo(Kecamatan::class);
-    }
 }
 
 

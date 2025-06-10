@@ -39,10 +39,9 @@ class KerjasamaController extends Controller
      public function store(Request $request)
 {
     $request->validate([
-        'nama' => 'required|string',
         'name_company' => 'required|string',
-
         'alamat' => 'required|string',
+
         'no_telepon' => 'required|string|max:30',
         'kecamatan_id' => 'required|exists:kecamatan,id',
         'file_mou' => 'required|file|mimes:pdf|max:2048',
@@ -60,9 +59,10 @@ class KerjasamaController extends Controller
     $supplier = auth()->guard('supplier')->user();
     Kerjasama::create([
     'supplier_id' => auth()->guard('supplier')->user()->id,
-    'nama' => $request->nama,
+     'nama' => auth()->guard('supplier')->user()->nama,
     'name_company' => $request->name_company,
-    'alamat' => $request->alamat,
+    'alamat_id' => $alamat->id,
+
     'kecamatan_id' => $request->kecamatan_id,
     'no_telepon' => $request->no_telepon,
     'file_mou' => $path,

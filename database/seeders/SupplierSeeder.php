@@ -23,8 +23,8 @@ class SupplierSeeder extends Seeder
             'email' => 'user@test',
             'password' => Hash::make('password123'), // enkripsi password
             'gambar' => '',
-            'name_company' => 'Indofood',
-            'phone_number' => '081234567890',
+            'nama' => 'ken',
+            'phone_number' => '',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

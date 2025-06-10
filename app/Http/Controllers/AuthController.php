@@ -70,13 +70,13 @@ class AuthController extends Controller
 
 
     $validatedData = $request->validate([
-        'name_company' => 'required|string|max:255',
+        'nama' => 'required|string|max:255',
         'email' => 'required|email|unique:supplier,email',
         'password' => 'required|min:6',
     ]);
 
     $supplier = Supplier::create([
-        'name_company' => $validatedData['name_company'],
+        'nama' => $validatedData['nama'],
         'email' => $validatedData['email'],
         'password' => Hash::make($validatedData['password']),
     ]);

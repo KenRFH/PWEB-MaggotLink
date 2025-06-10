@@ -16,19 +16,17 @@
             </div>
 
             <div class="mt-6 space-y-2">
-                <p><strong>Nama Perusahaan:</strong> {{ $user->name_company }}</p>
-                <p><strong>No HP:</strong> {{ $user->phone_number }}</p>
-               <p><strong>Alamat:</strong> {{ $detailAlamat?->alamat?->jalan ?? '-' }}</p>
-
-
+                @if ($kerjasama)
+                    <p><strong>Nama Perusahaan:</strong> {{ $kerjasama->name_company }}</p>
+                    <p><strong>Nomor Telepon:</strong> {{ $kerjasama->no_telepon }}</p>
+                    <p><strong>Alamat:</strong> {{ $detailAlamat?->alamat?->jalan ?? '-' }}</p>
+                @else
+                    <p class="text-red-500">Data kerjasama belum tersedia.</p>
+                @endif
 
             </div>
 
-            <select name="kecamatan_id" required>
-                @foreach ($kecamatanList as $kecamatan)
-                    <option value="{{ $kecamatan->id }}">{{ $kecamatan->nama }}</option>
-                @endforeach
-            </select>
+
 
             <div class="mt-6 text-center">
                 <button onclick="document.getElementById('editModal').classList.remove('hidden')"
@@ -50,14 +48,24 @@
                     @method('PUT')
 
                     <div>
-                        <label class="block font-semibold">Nama Perusahaan</label>
-                        <input type="text" name="name_company" value="{{ old('name_company', $user->name_company) }}"
+                        <label class="block font-semibold">Nama</label>
+                        <input type="text" name="nama" value="{{ old('nama', $user->nama) }}"
                             class="border p-2 rounded w-full" />
                     </div>
 
                     <div>
+                        <label class="block font-semibold">Nama Perusahaan</label>
+                        <input type="text" name="name_company"
+                            value="{{ old('name_company', optional($kerjasama)->name_company) }}" />
+
+
+                    </div>
+
+
+                    <div>
                         <label class="block font-semibold">No HP</label>
-                        <input type="text" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}"
+                        <input type="text" name="phone_number"
+                            value="{{ old('phone_number', optional($kerjasama)->no_telepon) }}"
                             class="border p-2 rounded w-full" />
                     </div>
                     <div>

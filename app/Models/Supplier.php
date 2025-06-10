@@ -16,7 +16,7 @@ class Supplier extends Authenticatable
     protected $fillable =[
         "email",
         "password",
-        "name_company",
+        "nama",
         "phone_number",
         "gambar",
         "alamat",

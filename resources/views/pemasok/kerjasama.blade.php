@@ -31,10 +31,7 @@
         <form action="{{ route('kerjasama.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
             @csrf
 
-            <div>
-                <label class="block font-semibold">Nama</label>
-                <input type="text" name="nama" class="border p-2 rounded w-full" required>
-            </div>
+            <p>Nama: {{ Auth::guard('supplier')->user()->nama }}</p>
 
             <div>
                 <label class="block font-semibold">Nama Perusahaan</label>

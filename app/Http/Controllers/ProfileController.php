@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DetailAlamat;
 use App\Models\Alamat;
+use App\Models\Kecamatan;
+use App\Models\Kerjasama;
+
 
 class ProfileController extends Controller
 {
@@ -22,76 +25,77 @@ class ProfileController extends Controller
         $user = Auth::guard('supplier')->user();
         $detailAlamat = DetailAlamat::with('alamat')->where('supplier_id', $user->id)->first();
         $kecamatanList = Kecamatan::all();
-return view('pemasok.profile', compact('user', 'detailAlamat', 'kecamatanList'));
+        $kerjasama = $user->kerjasama()->latest()->first();
+return view('pemasok.profile', compact('user', 'detailAlamat', 'kecamatanList', 'kerjasama'));
 
 
-     
+
+
     }
-
-    return redirect()->route('login');
 }
 
 
 
    public function update(Request $request)
 {
-    if (Auth::guard('admin')->check()) {
-        $user = Auth::guard('admin')->user();
+    $user = auth()->guard('supplier')->user();
 
-        $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'password' => 'nullable|min:6|confirmed',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-
-        $user->nama = $validated['nama'];
-
-    } elseif (Auth::guard('supplier')->check()) {
-    $user = Auth::guard('supplier')->user();
-
-    $validated = $request->validate([
-        'name_company' => 'required|string|max:255',
-        'phone_number' => 'nullable|string|max:20',
-        'alamat' => 'required|string|max:255',
+    $request->validate([
+        'nama' => 'required|string|max:255',
+        'name_company' => 'required|string',
+        'phone_number' => 'required|string|max:30',
+        'alamat' => 'nullable|string',
         'kecamatan_id' => 'required|exists:kecamatan,id',
-        'password' => 'nullable|min:6|confirmed',
-        'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'password' => 'nullable|confirmed|min:6',
+        'gambar' => 'nullable|image|max:2048',
     ]);
 
-    $user->name_company = $validated['name_company'];
-    $user->phone_number = $validated['phone_number'];
+    // Update kerjasama
+    $kerjasama = Kerjasama::where('supplier_id', $user->id)->latest()->first();
+    if ($kerjasama) {
+        $kerjasama->name_company = $request->name_company;
+        $kerjasama->no_telepon = $request->phone_number;
+        $kerjasama->kecamatan_id = $request->kecamatan_id;
+        $kerjasama->save();
+    }
 
-    // ✅ Simpan ke tabel alamat terlebih dahulu
-    $alamatBaru = Alamat::create([
-        'jalan' => $validated['alamat'],
-        'kecamatan_id' => $request->kecamatan_id, // opsional
+    // Update alamat supplier jika ada
+    $alamat = Alamat::firstOrCreate([
+        'jalan' => $request->alamat,
+        'kecamatan_id' => $request->kecamatan_id,
     ]);
 
-    // ✅ Simpan ke detail_alamat
     DetailAlamat::updateOrCreate(
         ['supplier_id' => $user->id],
-        ['alamat_id' => $alamatBaru->id]
+        [
+            'alamat_id' => $alamat->id,
+            'kecamatan_id' => $request->kecamatan_id
+        ]
     );
-}
 
+    $user->nama = $request->nama;
 
-
+    // Update gambar jika ada
+    if ($request->hasFile('gambar')) {
+        $path = $request->file('gambar')->store('gambar_profil', 'public');
+        $user->gambar = $path;
+    }
 
     // Update password jika diisi
-    if (!empty($validated['password'])) {
-        $user->password = Hash::make($validated['password']);
+    if ($request->filled('password')) {
+        $user->password = bcrypt($request->password);
+    }
+    if ($request->filled('nama')) {
+        $user->nama = $request->nama;
     }
 
-    // Upload gambar jika ada
-    if ($request->hasFile('gambar')) {
-        $path = $request->file('gambar')->store('uploads', 'public');
-        $user->gambar = 'storage/' . $path;
-    }
+    // Simpan alamat jika ada
 
     $user->save();
 
-    return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
+    return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
 }
+
 
 
 
