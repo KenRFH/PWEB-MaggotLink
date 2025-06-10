@@ -15,7 +15,7 @@ class Penjadwalan extends Model
         'total_berat',
         'detail_alamat_id',
         'gambar',
-        'jadwal_admin_id',
+        'jadwal_admins_id',
         'status',
     ];
 
@@ -24,7 +24,7 @@ class Penjadwalan extends Model
         return $this->belongsTo(DetailAlamat::class);
     }
 
-   public function jadwalAdmin()
+   public function jadwalAdmins()
 {
     return $this->belongsTo(JadwalAdmin::class, 'jadwal_admins_id');
 }

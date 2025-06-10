@@ -8,68 +8,70 @@ use App\Models\DetailAlamat;
 use App\Models\Penjadwalan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Support\Facades\DB;
 
 class BagiSampahController extends Controller
 {
-    public function index()
+    // ========================
+    // ADMIN VIEW: Lihat Jadwal & Pengajuan
+    // ========================
+    public function indexAdmin()
     {
-        $besok = Carbon::tomorrow();
-        $kecamatanList = Kecamatan::all();
+        $tanggalTerpakai = JadwalAdmin::pluck('tanggal')->toArray();
 
-        // Admin login
-        if (auth('admin')->check()) {
-            $tanggalTerpakai = JadwalAdmin::pluck('tanggal')->toArray();
+        $jadwalDenganJumlah = JadwalAdmin::select(
+                'jadwal_admins.id',
+                'jadwal_admins.tanggal',
+                DB::raw('COUNT(penjadwalan.id) as jumlah_pengambilan')
+            )
+            ->leftJoin('penjadwalan', 'penjadwalan.jadwal_admins_id', '=', 'jadwal_admins.id')
+            ->whereDate('jadwal_admins.tanggal', '>=', Carbon::today())
+            ->groupBy('jadwal_admins.id', 'jadwal_admins.tanggal')
+            ->orderBy('jadwal_admins.tanggal')
+            ->get();
 
-            $jadwalDenganJumlah = JadwalAdmin::select(
-                    'jadwal_admins.id',
-                    'jadwal_admins.tanggal',
-                    DB::raw('COUNT(penjadwalan.id) as jumlah_pengambilan')
-                )
-                ->leftJoin('penjadwalan', 'penjadwalan.jadwal_admins_id', '=', 'jadwal_admins.id')
-                ->whereDate('jadwal_admins.tanggal', '>=', Carbon::today())
-                ->groupBy('jadwal_admins.id', 'jadwal_admins.tanggal')
-                ->orderBy('jadwal_admins.tanggal')
-                ->get();
+        $penjadwalanAll = Penjadwalan::with(['jadwalAdmins', 'detailAlamat.supplier'])->get();
 
-            $penjadwalanAll = Penjadwalan::with('jadwalAdmin')->get();
-
-            return view('admin.bagisampah', compact(
-                'penjadwalanAll',
-                'tanggalTerpakai',
-                'jadwalDenganJumlah'
-            ));
-
-        // Supplier login
-        } elseif (auth('supplier')->check()) {
-    $supplier = auth('supplier')->user();
-
-    if (!$supplier) {
-        return abort(403, 'Anda tidak terdaftar sebagai supplier.');
-    }
-    $detailAlamat = DetailAlamat::where('supplier_id', $supplier->id)->first();
-
-if (!$detailAlamat) {
-    return redirect()->back()->withErrors(['error' => 'Alamat Anda belum tersedia. Harap lengkapi terlebih dahulu.']);
-}
-
-
-    $jadwalAdminList = JadwalAdmin::whereDate('tanggal', '>=', $besok)->get();
-
-    // Ambil data penjadwalan milik supplier
-    $penjadwalanSaya = Penjadwalan::with(['jadwalAdmin', 'detailAlamat'])
-    ->whereHas('detailAlamat', function ($query) use ($supplier) {
-        $query->where('supplier_id', $supplier->id);
-    })
-    ->orderByDesc('created_at')
-    ->get();
-
-
-    return view('pemasok.bagisampah', compact('jadwalAdminList', 'penjadwalanSaya'));}
+        return view('admin.bagisampah', compact(
+            'penjadwalanAll',
+            'tanggalTerpakai',
+            'jadwalDenganJumlah'
+        ));
     }
 
+    // ========================
+    // SUPPLIER VIEW
+    // ========================
+    public function indexSupplier()
+    {
+        $supplier = auth('supplier')->user();
+        if (!$supplier) {
+            return abort(403, 'Anda tidak terdaftar sebagai supplier.');
+        }
 
+        $detailAlamat = DetailAlamat::where('supplier_id', $supplier->id)->first();
+        if (!$detailAlamat) {
+            return redirect()->back()->withErrors(['error' => 'Alamat Anda belum tersedia. Harap lengkapi terlebih dahulu.']);
+        }
 
+        $jadwalAdminList = JadwalAdmin::whereDate('tanggal', '>=', Carbon::tomorrow())->get();
+
+        $penjadwalanSaya = Penjadwalan::with(['jadwalAdmin', 'detailAlamat'])
+            ->whereHas('detailAlamat', function ($query) use ($supplier) {
+                $query->where('supplier_id', $supplier->id);
+            })
+            ->orderByDesc('created_at')
+            ->get();
+
+        return view('pemasok.bagisampah', compact('jadwalAdminList', 'penjadwalanSaya'));
+    }
+
+    // ========================
+    // ADMIN - Menyimpan Tanggal Jadwal
+    // ========================
     public function jadwalStore(Request $request)
     {
         $request->validate([
@@ -82,52 +84,51 @@ if (!$detailAlamat) {
             JadwalAdmin::firstOrCreate(['tanggal' => $tanggal]);
         }
 
-        return redirect()->route('bagisampah')->with('success', 'Tanggal berhasil disimpan.');
+        return redirect()->route('admin.bagisampah')->with('success', 'Tanggal berhasil disimpan.');
     }
 
-   public function store(Request $request)
-{
-
-    $request->validate([
-        'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        'total_berat' => 'required|numeric|min:0.01',
-        'jadwal_admin_id' => 'required|exists:jadwal_admins,id',
-    ]);
-
-    $supplier = auth('supplier')->user();
-
-    // Ambil detail alamat milik supplier (asumsinya satu supplier satu alamat)
-    $detailAlamat = DetailAlamat::where('supplier_id', $supplier->id)->first();
-
-    if (!$detailAlamat) {
-        return back()->withErrors(['error' => 'Detail alamat tidak ditemukan untuk supplier ini.']);
-    }
-
-    $gambarPath = null;
-    if ($request->hasFile('gambar')) {
-        $gambarPath = $request->file('gambar')->store('gambar_sampah', 'public');
-    }
-
-    Penjadwalan::create([
-        'total_berat' => $request->total_berat,
-        'gambar' => $gambarPath,
-        'jadwal_admin_id' => $request->jadwal_admin_id,
-        'detail_alamat_id' => $detailAlamat->id,
-    ]);
-
-    return redirect()->back()->with('success', 'Pengajuan penjadwalan berhasil disimpan.');
-}
-
-
-    public function delete(Request $request)
+    // ========================
+    // SUPPLIER - Menyimpan Pengajuan Penjadwalan
+    // ========================
+    public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required|exists:penjadwalan,id',
+            'gambar' => 'nullable|string',
+            'total_berat' => 'required|numeric|min:0.01',
+            'jadwal_admins_id' => 'required|exists:jadwal_admins,id',
         ]);
 
-        $penjadwalan = Penjadwalan::findOrFail($request->id);
-        $penjadwalan->delete();
+        $supplier = auth('supplier')->user();
+        $detailAlamat = DetailAlamat::where('supplier_id', $supplier->id)->first();
 
-        return redirect()->back()->with('success', 'Penjadwalan berhasil dibatalkan.');
+        if (!$detailAlamat) {
+            return back()->withErrors(['error' => 'Detail alamat tidak ditemukan untuk supplier ini.']);
+        }
+
+        $gambarPath = null;
+        if ($request->filled('gambar') && Str::startsWith($request->gambar, 'data:image')) {
+            $image_parts = explode(";base64,", $request->gambar);
+            $image_base64 = base64_decode($image_parts[1]);
+            $imageName = 'gambar_' . time() . '.jpg';
+            $imagePath = 'gambar_sampah/' . $imageName;
+            Storage::disk('public')->put($imagePath, $image_base64);
+            $gambarPath = $imagePath;
+        }
+
+        Penjadwalan::create([
+            'total_berat' => $request->total_berat,
+            'gambar' => $gambarPath,
+            'jadwal_admins_id' => $request->jadwal_admins_id,
+            'detail_alamat_id' => $detailAlamat->id,
+            'status' => 'menunggu',
+        ]);
+
+        return redirect()->back()->with('success', 'Pengajuan penjadwalan berhasil disimpan.');
     }
+
+    // ========================
+    // SUPPLIER - Hapus Jadwal
+    // ========================
+
 }
+

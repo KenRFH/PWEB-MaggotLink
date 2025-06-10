@@ -23,11 +23,7 @@
                                     <img src="{{ asset('storage/' . $penjadwalan->gambar) }}" alt="Gambar Sampah"
                                         class="w-32 mt-2">
                                 @endif
-                                <form method="POST" action="{{ route('penjadwalan.delete') }}">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $penjadwalan->id }}">
-                                    <button type="submit" class="text-red-500 mt-2">Batalkan</button>
-                                </form>
+
                             </div>
                         @endforeach
                     @endif
@@ -43,14 +39,14 @@
                         @csrf
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Tanggal</label>
-                            <select name="jadwal_admin_id" class="mt-1 w-full border rounded-lg p-2">
+                            <select name="jadwal_admins_id" class="mt-1 w-full border rounded-lg p-2">
                                 @foreach ($jadwalAdminList as $jadwal)
                                     <option value="{{ $jadwal->id }}">{{ $jadwal->tanggal }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <p><strong>Alamat:</strong> {{ $penjadwalan->detailAlamat->alamat ?? 'Alamat tidak tersedia' }}</p>
+                        <p><strong>Alamat:</strong> {{ $user->detailAlamat->alamat ?? 'Alamat tidak tersedia' }}</p>
 
 
                         <div>
@@ -78,6 +74,14 @@
                             class="w-full bg-amber-500 text-white py-2 rounded-lg hover:bg-lime-500 hover:font-bold font-semibold duration-500">
                             Kirim Pengajuan
                         </button>
+                        @if ($errors->any())
+                            <div class="text-red-500 mb-4">
+                                @foreach ($errors->all() as $error)
+                                    <p>{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
+
                     </form>
 
                 </div>

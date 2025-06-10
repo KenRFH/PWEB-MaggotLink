@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('gambar');
             $table->foreignId('jadwal_admins_id')->constrained('jadwal_admins')->onDelete('cascade');
             $table->foreignId('detail_alamat_id')->constrained('detail_alamat')->onDelete('cascade');
-            $table->boolean('status')->default(0); // 0 = unclaim, 1 = claimed
+            $table->string('status')->default('menunggu');
+
             $table->timestamps();
         });
     }
