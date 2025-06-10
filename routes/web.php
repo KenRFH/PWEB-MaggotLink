@@ -39,6 +39,8 @@ Route::middleware(['auth:admin'])->group(function () {
     // Admin - Penjadwalan
     Route::post('/admin/bagisampah', [BagiSampahController::class, 'jadwalStore'])->name('bagisampah.jadwal');
     Route::get('/admin/bagisampah', [BagiSampahController::class, 'indexAdmin'])->name('admin.bagisampah');
+    Route::post('/bagisampah/update-status/{id}', [BagiSampahController::class, 'updateStatus'])->name('bagisampah.updateStatus');
+
 });
 
 

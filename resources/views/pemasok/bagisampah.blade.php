@@ -3,26 +3,39 @@
 @section('content')
     @include('components.navbar-pemasok')
 
-    <div class="flex min-h-screen">
+    <div class="bg-[#183B4E] flex min-h-screen">
         <main class="flex-1 p-6 md:p-10 bg-cover bg-center"
             style=" background-image: url('{{ asset('assets/bagi-sampah.png') }}');">
             <div class="flex flex-col lg:flex-row gap-6">
                 {{-- Kiri: daftar penjadwalan --}}
                 <div class="flex-1 space-y-4">
-                    <h2 class="text-lg font-bold mt-4">Pengajuan Jadwal Anda</h2>
+                    <h2 class="text-4xl mt-2 font-semibold text-white text-center">Pengajuan Jadwal</h2>
                     @if ($penjadwalanSaya->isEmpty())
                         <p>Belum ada pengajuan penjemputan sampah.</p>
                     @else
                         @foreach ($penjadwalanSaya as $penjadwalan)
-                            <div class="bg-white p-4 rounded shadow mb-3">
+                            <div class="bg-white p-4 rounded-md shadow-lg mb-3">
                                 <p><strong>Tanggal Penjemputan:</strong>
-                                    {{ \Carbon\Carbon::parse($penjadwalan->jadwalAdmin->tanggal)->format('d M Y') }}</p>
+                                    {{ \Carbon\Carbon::parse($penjadwalan->jadwalAdmins->tanggal)->format('d M Y') }}</p>
                                 <p><strong>Total Berat:</strong> {{ number_format($penjadwalan->total_berat, 2) }} kg</p>
                                 @if ($penjadwalan->gambar)
                                     <p><strong>Gambar:</strong></p>
                                     <img src="{{ asset('storage/' . $penjadwalan->gambar) }}" alt="Gambar Sampah"
                                         class="w-32 mt-2">
                                 @endif
+                                <p><strong>Alamat:</strong> {{ $detailAlamat->alamat->jalan }}</p>
+
+
+
+                                <div class="flex justify-end px-4">
+                                    @if ($penjadwalan->status == 'diproses')
+                                        <span
+                                            class="bg-lime-500 px-2 py-2 rounded-lg text-white font-semibold">Diproses</span>
+                                    @else
+                                        <span class="bg-amber-600 text-white font-semibold">Pending</span>
+                                    @endif
+                                </div>
+
 
                             </div>
                         @endforeach
@@ -45,8 +58,6 @@
                                 @endforeach
                             </select>
                         </div>
-
-                        <p><strong>Alamat:</strong> {{ $user->detailAlamat->alamat ?? 'Alamat tidak tersedia' }}</p>
 
 
                         <div>
@@ -71,7 +82,7 @@
                         </div>
 
                         <button type="submit"
-                            class="w-full bg-amber-500 text-white py-2 rounded-lg hover:bg-lime-500 hover:font-bold font-semibold duration-500">
+                            class="w-full bg-lime-300 text-white py-2 rounded-lg hover:bg-lime-500 hover:font-bold font-semibold duration-500">
                             Kirim Pengajuan
                         </button>
                         @if ($errors->any())

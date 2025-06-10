@@ -17,46 +17,21 @@
                                     Pengambilan</th>
                             </tr>
                         </thead>
-
                         <tbody>
-                            @foreach ($penjadwalanAll as $item)
-                                <tr>
-                                    <td class="border px-4 py-2">
-                                        @if ($item->jadwalAdmins && $item->jadwalAdmins->tanggal)
-                                            {{ \Carbon\Carbon::parse($item->jadwalAdmins->tanggal)->format('d M Y') }}
-                                        @else
-                                            <span class="text-red-500 italic">Belum dijadwalkan</span>
-                                        @endif
-                                    </td>
-                                    <td class="border px-4 py-2">{{ $item->detailAlamat->supplier->supplier_id  }}</td>
-                                    <td class="border px-4 py-2">{{ $item->total_berat }} kg</td>
-                                    <td class="border px-4 py-2">
-                                        {{ $item->detailAlamat->alamat->jalan ?? '-' }},
-                                        {{ $item->detailAlamat->alamat->kecamatan->nama ?? '-' }}
-                                    </td>
-                                    <td class="border px-4 py-2 font-semibold">
-                                        @if ($item->status == 1)
-                                            <span class="text-green-600">Sudah Diklaim</span>
-                                        @else
-                                            <span class="text-yellow-600">Belum Diklaim</span>
-                                        @endif
-                                    </td>
-                                    <td class="border px-4 py-2">
-                                        @if ($item->status == 0)
-                                            <button data-id="{{ $item->id }}" data-berat="{{ $item->total_berat }}"
-                                                data-user="{{ $item->detailAlamat->supplier_id }}"
-                                                class="btn-setujui bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm">
-                                                Konfirmasi Penjadwalan
-                                            </button>
-                                        @else
-                                            <span class="text-gray-400 text-sm italic">Sudah diklaim</span>
-                                        @endif
-                                    </td>
+                            @forelse($jadwalDenganJumlah as $jadwal)
+                                <tr class="hover:bg-green-50">
+                                    <td class="border border-gray-300 px-5 py-2">
+                                        {{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d M Y') }}</td>
+                                    <td class="border border-gray-300 px-5 py-2">{{ $jadwal->jumlah_pengambilan }}</td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="2"
+                                        class="border border-gray-300 px-5 py-4 text-center text-gray-400 italic">Belum ada
+                                        jadwal.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
-
-
                     </table>
                 </div>
 
@@ -75,7 +50,7 @@
                         @enderror
 
                         <button type="submit"
-                            class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded transition duration-300">Simpan
+                            class="w-full mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded transition duration-300">Simpan
                             Jadwal</button>
                     </form>
                 </div>
@@ -122,23 +97,28 @@
                                         {{ $item->detailAlamat->alamat->kecamatan->nama ?? '-' }}
                                     </td>
                                     <td class="border px-4 py-2 font-semibold">
-                                        @if ($item->status == 1)
-                                            <span class="text-green-600">Sudah Diklaim</span>
+                                        @if ($item->status == 'diproses')
+                                            <span class="text-green-600">Diproses</span>
                                         @else
-                                            <span class="text-yellow-600">Belum Diklaim</span>
+                                            <span class="text-yellow-600">Pending</span>
                                         @endif
+
                                     </td>
                                     <td class="border px-4 py-2">
-                                        @if ($item->status == 0)
-                                            <button data-id="{{ $item->id }}" data-berat="{{ $item->total_berat }}"
-                                                data-user="{{ $item->detailAlamat->supplier_id }}"
-                                                class="btn-setujui bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm">
-                                                Konfirmasi Penjadwalan
-                                            </button>
+                                        @if ($item->status === 'menunggu')
+                                            <form action="{{ route('bagisampah.updateStatus', $item->id) }}" method="POST"
+                                                onsubmit="return confirm('Konfirmasi penjadwalan ini?')">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm">
+                                                    Konfirmasi Penjadwalan
+                                                </button>
+                                            </form>
                                         @else
                                             <span class="text-gray-400 text-sm italic">Sudah diklaim</span>
                                         @endif
                                     </td>
+
                                 </tr>
                             @endforeach
                         </tbody>

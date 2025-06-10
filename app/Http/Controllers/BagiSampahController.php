@@ -42,6 +42,16 @@ class BagiSampahController extends Controller
         ));
     }
 
+    // admin update status
+   public function updateStatus(Request $request, $id)
+{
+    $penjadwalan = Penjadwalan::findOrFail($id);
+    $penjadwalan->status = 'diproses'; // ubah dari 'menunggu' ke 'diproses'
+    $penjadwalan->save();
+
+    return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+}
+
     // ========================
     // SUPPLIER VIEW
     // ========================
@@ -59,14 +69,14 @@ class BagiSampahController extends Controller
 
         $jadwalAdminList = JadwalAdmin::whereDate('tanggal', '>=', Carbon::tomorrow())->get();
 
-        $penjadwalanSaya = Penjadwalan::with(['jadwalAdmin', 'detailAlamat'])
+        $penjadwalanSaya = Penjadwalan::with(['jadwalAdmins', 'detailAlamat'])
             ->whereHas('detailAlamat', function ($query) use ($supplier) {
                 $query->where('supplier_id', $supplier->id);
             })
             ->orderByDesc('created_at')
             ->get();
 
-        return view('pemasok.bagisampah', compact('jadwalAdminList', 'penjadwalanSaya'));
+        return view('pemasok.bagisampah', compact('jadwalAdminList', 'penjadwalanSaya', 'detailAlamat'));
     }
 
     // ========================
