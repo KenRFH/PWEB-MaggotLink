@@ -8,6 +8,7 @@ use App\Models\DetailAlamat;
 use App\Models\Penjadwalan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -87,6 +88,10 @@ class BagiSampahController extends Controller
         $request->validate([
             'tanggal' => 'required|string'
         ], ['tanggal.required' => 'Harap pilih minimal satu tanggal.']);
+
+        if($request->tanggal > Date::now()->addDays(7)) {
+            return redirect()->route('admin.bagisampah')->with('error', 'Tanggal gagal disimpan.');
+        }
 
         $tanggalDipilih = array_map('trim', explode(',', $request->tanggal));
 

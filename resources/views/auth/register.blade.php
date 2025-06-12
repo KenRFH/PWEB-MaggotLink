@@ -28,8 +28,8 @@
                 @csrf
 
                 <div>
-                    <label class="text-sm font-light text-gray-700 mb-1 block">Nama Perusahaan</label>
-                    <input type="text" name="name_company" placeholder="Masukkan Nama Perusahaan"
+                    <label class="text-sm font-light text-gray-700 mb-1 block">Nama </label>
+                    <input type="text" name="nama" placeholder="Masukkan Nama Perusahaan"
                         class="w-full p-2 border border-gray-300 rounded" required>
                 </div>
                 <!-- Email -->
