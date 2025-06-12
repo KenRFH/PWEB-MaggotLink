@@ -136,9 +136,6 @@ class BagiSampahController extends Controller
         return redirect()->back()->with('success', 'Pengajuan penjadwalan berhasil disimpan.');
     }
 
-    // ========================
-    // SUPPLIER - Hapus Jadwal
-    // ========================
 
 }
 

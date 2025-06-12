@@ -86,7 +86,7 @@ class AuthController extends Controller
 
     return redirect()->route('showLogin');
 
-        // Login langsung setelah registrasi berhasil
+
 
     }
 }
