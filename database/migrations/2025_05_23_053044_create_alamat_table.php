@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('alamat', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('supplier_id')->constrained('supplier')->onDelete('cascade');
             $table->string('jalan');
-           
-
             $table->foreignId('kecamatan_id')->constrained('kecamatan')->onDelete('cascade');
             $table->timestamps();
         });

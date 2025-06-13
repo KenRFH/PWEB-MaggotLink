@@ -11,9 +11,10 @@ class Alamat extends Model
     protected $table = "alamat";
 
     protected $fillable =[
+        'supplier_id',
         'jalan',
         'kecamatan_id',
-        
+
     ];
 
     public function kecamatan()
@@ -21,10 +22,12 @@ class Alamat extends Model
         return $this->belongsTo(Kecamatan::class);
     }
 
-    public function detailAlamat()
+    public function supplier()
     {
-        return $this->hasMany(DetailAlamat::class);
+        return $this->belongsTo(Supplier::class);
     }
+
+
 
     // App\Models\Alamat.php
 

@@ -13,24 +13,20 @@ class Penjadwalan extends Model
 
     protected $fillable =[
         'total_berat',
-        'detail_alamat_id',
+        'supplier_id',
         'gambar',
         'jadwal_admins_id',
         'status',
     ];
 
-    public function detailAlamat()
-    {
-        return $this->belongsTo(DetailAlamat::class);
-    }
 
    public function jadwalAdmins()
 {
-    return $this->belongsTo(JadwalAdmin::class, 'jadwal_admins_id');
+    return $this->belongsTo(JadwalAdmin::class);
 }
 
     public function supplier()
     {
-        return $this->hasOneThrough(Supplier::class, DetailAlamat::class, 'id', 'id', 'detail_alamat_id', 'supplier_id');
+        return $this->belongsTo(Supplier::class);
     }
 }

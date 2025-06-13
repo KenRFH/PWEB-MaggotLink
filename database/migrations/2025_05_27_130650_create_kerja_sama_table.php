@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('kerja_sama', function (Blueprint $table) {
             $table->id();
             $table->foreignId('supplier_id')->constrained('supplier')->onDelete('cascade');
-
             $table->string('file_mou');
             $table->text('catatan')->nullable();
             $table->enum('status',['approved','rejected', 'pending']);

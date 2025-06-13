@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Admin;
 
 
 class AdminSeeder extends Seeder
@@ -18,7 +19,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
          echo "Seeder jalan!\n";
-        DB::table('admin')->insert([
+        Admin::insert([
             'nama' => 'Admin Utama',
             'email' => 'admin@test',
             'password' => Hash::make('password123'), // enkripsi password

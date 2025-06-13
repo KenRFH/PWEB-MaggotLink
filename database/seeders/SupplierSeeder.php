@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Supplier;
+
 
 
 class SupplierSeeder extends Seeder
@@ -19,12 +21,12 @@ class SupplierSeeder extends Seeder
     {
 
          echo "Seeder jalan!\n";
-        DB::table('supplier')->insert([
+        Supplier::insert([
             'email' => 'user@test',
             'password' => Hash::make('password123'), // enkripsi password
             'gambar' => '',
             'nama' => 'ken',
-            'phone_number' => '',
+            'no_telp' => '',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

@@ -16,7 +16,8 @@ return new class extends Migration
         $table->string("email")->unique();
         $table->string("password");
         $table->string("nama")->nullable(); // ✅ cukup ->nullable()
-        $table->string("phone_number")->nullable(); // ❗️lihat catatan bawah
+        $table->string("nama_perusahaan")->nullable(); // ✅ cukup ->nullable()
+        $table->string("no_telp")->nullable(); // ❗️lihat catatan bawah
         $table->string("gambar")->nullable();
         $table->timestamps();
     });

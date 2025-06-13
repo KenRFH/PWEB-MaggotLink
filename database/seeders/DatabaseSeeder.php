@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
         SupplierSeeder::class,
         KecamatanSeeder::class,
         AlamatSeeder::class,
-        DetailAlamatSeeder::class,
 
     ]);
     }

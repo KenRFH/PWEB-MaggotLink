@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('total_berat');
             $table->string('gambar');
+            $table->foreignId('supplier_id')->constrained('supplier')->onDelete('cascade');
             $table->foreignId('jadwal_admins_id')->constrained('jadwal_admins')->onDelete('cascade');
-            $table->foreignId('detail_alamat_id')->constrained('detail_alamat')->onDelete('cascade');
             $table->string('status')->default('menunggu');
-
             $table->timestamps();
         });
     }

@@ -12,11 +12,17 @@ class JadwalAdmin extends Model
 
     protected $fillable =[
         'tanggal',
+        'admin_id',
     ];
 
     public function penjadwalan()
     {
         return $this->hasMany(Penjadwalan::class);
+    }
+
+    public function jadwalAdmin()
+    {
+        return $this->belongsTo(jadwalAdmin::class);
     }
 
 }

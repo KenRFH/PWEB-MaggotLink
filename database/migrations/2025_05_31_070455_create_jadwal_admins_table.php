@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('jadwal_admins', function (Blueprint $table) {
             $table->id();
+             $table->foreignId('admin_id')->constrained('admin')->onDelete('cascade');
             $table->date('tanggal');
             $table->timestamps();
         });

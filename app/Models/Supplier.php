@@ -17,19 +17,25 @@ class Supplier extends Authenticatable
         "email",
         "password",
         "nama",
-        "phone_number",
+        "no_telp",
         "gambar",
-        "alamat",
+
     ];
 
-    public function detailAlamat(){
-        return $this->hasOne(DetailAlamat::class);
-    }
+
 
     public function kerjasama()
 {
     return $this->hasMany(Kerjasama::class);
 }
+
+public function alamat()
+{
+    return $this->hasOne(Supplier::class);
+}
+
+
+
 
 }
 
