@@ -35,7 +35,7 @@
 
             <div>
                 <label class="block font-semibold">Nama Perusahaan</label>
-                <input type="text" name="name_company" class="border p-2 rounded w-full" required>
+                <input type="text" name="nama_perusahaan" class="border p-2 rounded w-full" required>
             </div>
 
             <div class="flex space-x-2">
@@ -56,7 +56,7 @@
 
             <div>
                 <label class="block font-semibold">No. Telepon</label>
-                <input type="text" name="no_telepon" class="border p-2 rounded w-full" required>
+                <input type="text" name="no_telp" class="border p-2 rounded w-full" required>
             </div>
 
             <div>

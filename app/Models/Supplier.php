@@ -17,6 +17,7 @@ class Supplier extends Authenticatable
         "email",
         "password",
         "nama",
+        "nama_perusahaan",
         "no_telp",
         "gambar",
 
@@ -31,7 +32,7 @@ class Supplier extends Authenticatable
 
 public function alamat()
 {
-    return $this->hasOne(Supplier::class);
+    return $this->hasOne(Alamat::class);
 }
 
 

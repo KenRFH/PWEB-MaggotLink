@@ -17,9 +17,10 @@
 
             <div class="mt-6 space-y-2">
                 @if ($kerjasama)
-                    <p><strong>Nama Perusahaan:</strong> {{ $kerjasama->name_company }}</p>
-                    <p><strong>Nomor Telepon:</strong> {{ $kerjasama->no_telepon }}</p>
-                    <p><strong>Alamat:</strong> {{ $detailAlamat?->alamat?->jalan ?? '-' }}</p>
+                    <p><strong>Nama Perusahaan:</strong> {{ $user->nama_perusahaan }}</p>
+                    <p><strong>Nomor Telepon:</strong> {{ $user->no_telp }}</p>
+                    <p>Alamat: {{ $alamat->jalan ?? '-' }}</p>
+                    <p>Kecamatan: {{ $alamat->kecamatan->nama ?? '-' }}</p>
                 @else
                     <p class="text-red-500">Data kerjasama belum tersedia.</p>
                 @endif
@@ -53,37 +54,34 @@
                             class="border p-2 rounded w-full" />
                     </div>
 
+                    <!-- Nama Perusahaan -->
                     <div>
                         <label class="block font-semibold">Nama Perusahaan</label>
-                        <input type="text" name="name_company"
-                            value="{{ old('name_company', optional($kerjasama)->name_company) }}" />
-
-
+                        <input type="text" name="nama_perusahaan"
+                            value="{{ old('nama_perusahaan', optional($user)->nama_perusahaan) }}"
+                            class="border p-2 rounded w-full" />
                     </div>
 
-
+                    <!-- No HP -->
                     <div>
                         <label class="block font-semibold">No HP</label>
-                        <input type="text" name="phone_number"
-                            value="{{ old('phone_number', optional($kerjasama)->no_telepon) }}"
+                        <input type="text" name="no_telp" value="{{ old('no_telp', optional($user)->no_telp) }}"
                             class="border p-2 rounded w-full" />
                     </div>
-                    <div>
-                        <label class="block font-semibold">Alamat</label>
-                        <input type="text" name="alamat" value="{{ old('alamat', $user->alamat) }}"
-                            class="border p-2 rounded w-full" />
-                    </div>
+
+                    <!-- Kecamatan -->
                     <div>
                         <label class="block font-semibold">Kecamatan</label>
                         <select name="kecamatan_id" class="border p-2 rounded w-full" required>
                             @foreach ($kecamatanList as $kecamatan)
                                 <option value="{{ $kecamatan->id }}"
-                                    {{ old('kecamatan_id') == $kecamatan->id ? 'selected' : '' }}>
+                                    {{ old('kecamatan_id', optional($kerjasama)->kecamatan_id) == $kecamatan->id ? 'selected' : '' }}>
                                     {{ $kecamatan->nama }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
+
 
 
                     <div>

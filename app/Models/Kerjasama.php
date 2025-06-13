@@ -15,7 +15,7 @@ class KerjaSama extends Model
 
     protected $fillable = [
         'supplier_id',
-        
+
         'file_mou',
         'catatan',
         'status',
@@ -27,10 +27,7 @@ class KerjaSama extends Model
     return $this->belongsTo(Supplier::class);
 }
 
-public function kecamatan()
-{
-    return $this->belongsTo(Kecamatan::class);
-}
+
 
 public function alamat()
 {

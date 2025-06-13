@@ -17,7 +17,7 @@ class JadwalAdmin extends Model
 
     public function penjadwalan()
     {
-        return $this->hasMany(Penjadwalan::class);
+        return $this->hasOne(Penjadwalan::class);
     }
 
     public function jadwalAdmin()
