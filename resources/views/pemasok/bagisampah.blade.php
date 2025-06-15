@@ -2,6 +2,7 @@
 
 @section('content')
     @include('components.navbar-pemasok')
+    
 
     <div class="bg-[#183B4E] flex min-h-screen">
         <main class="flex-1 p-6 md:p-10 bg-cover bg-center"

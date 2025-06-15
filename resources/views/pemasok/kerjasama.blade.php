@@ -5,14 +5,6 @@
 
 @section('content')
 
-@if ($errors->any())
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
-
     <div class="p-6 max-w-xl mx-auto bg-white shadow-lg rounded-2xl">
 
         <div class="flex justify-between items-center mb-4">

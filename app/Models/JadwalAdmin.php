@@ -20,9 +20,9 @@ class JadwalAdmin extends Model
         return $this->hasOne(Penjadwalan::class);
     }
 
-    public function jadwalAdmin()
+    public function Admin()
     {
-        return $this->belongsTo(jadwalAdmin::class);
+        return $this->belongsTo(Admin::class);
     }
 
 }

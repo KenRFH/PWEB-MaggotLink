@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Admin;
 use App\Models\JadwalAdmin;
 use App\Models\Kecamatan;
 use App\Models\Alamat;
 use App\Models\Penjadwalan;
+use App\Models\Kerjasama;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Date;
@@ -34,7 +37,7 @@ class BagiSampahController extends Controller
             ->orderBy('jadwal_admins.tanggal')
             ->get();
 
-        $penjadwalanAll = Penjadwalan::with(['jadwalAdmins', 'detailAlamat.supplier'])->get();
+        $penjadwalanAll = Penjadwalan::with(['jadwalAdmins', 'supplier'])->get();
 
         return view('admin.bagisampah', compact(
             'penjadwalanAll',
@@ -57,37 +60,49 @@ class BagiSampahController extends Controller
     // SUPPLIER VIEW
     // ========================
     public function indexSupplier()
-    {
-        $supplier = auth('supplier')->user();
-        if (!$supplier) {
-            return abort(403, 'Anda tidak terdaftar sebagai supplier.');
-        }
-
-        $alamat = Alamat::where('supplier_id', $supplier->id)->first();
-        if (!$alamat) {
-            return redirect()->back()->withErrors(['error' => 'Alamat Anda belum tersedia. Harap lengkapi terlebih dahulu.']);
-        }
-
-        $jadwalAdminList = JadwalAdmin::whereDate('tanggal', '>=', Carbon::tomorrow())->get();
-
-        $penjadwalanSaya = Penjadwalan::with(['supplier.alamat', 'jadwalAdmins'])
-    ->whereHas('supplier.alamat', function ($query) use ($supplier) {
-        $query->where('supplier_id', $supplier->id);
-    })
-    ->orderByDesc('created_at')
-    ->get();
-
-
-        return view('pemasok.bagisampah', compact('jadwalAdminList', 'penjadwalanSaya', 'alamat'));
+{
+    $supplier = auth('supplier')->user();
+    if (!$supplier) {
+        return abort(403, 'Anda tidak terdaftar sebagai supplier.');
     }
+
+    // Cek status pengajuan kerjasama
+    $pengajuan = Kerjasama::where('supplier_id', $supplier->id)->latest()->first();
+
+        if (!$pengajuan || $pengajuan->status !== 'approved') {
+        return redirect()->route('kerjasama')->withErrors([
+            'errors' => 'Pengajuan kerja sama Anda belum disetujui.',
+        ]);
+
+    }
+
+    $alamat = Alamat::where('supplier_id', $supplier->id)->first();
+    if (!$alamat) {
+        return redirect()->back()->withErrors(['error' => 'Alamat Anda belum tersedia. Harap lengkapi terlebih dahulu.']);
+    }
+
+    $jadwalAdminList = JadwalAdmin::whereDate('tanggal', '>=', \Carbon\Carbon::tomorrow())->get();
+
+    $penjadwalanSaya = Penjadwalan::with(['supplier.alamat', 'jadwalAdmins'])
+        ->whereHas('supplier.alamat', function ($query) use ($supplier) {
+            $query->where('supplier_id', $supplier->id);
+        })
+        ->orderByDesc('created_at')
+        ->get();
+
+    return view('pemasok.bagisampah', compact('jadwalAdminList', 'penjadwalanSaya', 'alamat'));
+}
+
 
     // ========================
     // ADMIN - Menyimpan Tanggal Jadwal
     // ========================
     public function jadwalStore(Request $request)
     {
+       $admin = auth('admin')->user();
         $request->validate([
             'tanggal' => 'required|string'
+
         ], ['tanggal.required' => 'Harap pilih minimal satu tanggal.']);
 
         if($request->tanggal > Date::now()->addDays(7)) {
@@ -96,9 +111,11 @@ class BagiSampahController extends Controller
 
         $tanggalDipilih = array_map('trim', explode(',', $request->tanggal));
 
-        foreach ($tanggalDipilih as $tanggal) {
-            JadwalAdmin::firstOrCreate(['tanggal' => $tanggal]);
-        }
+       foreach ($tanggalDipilih as $tanggal) {
+    JadwalAdmin::firstOrCreate(
+        ['tanggal' => $tanggal, 'admin_id' => $admin->id] // ✅ tambahkan admin_id
+    );
+}
 
         return redirect()->route('admin.bagisampah')->with('success', 'Tanggal berhasil disimpan.');
     }
@@ -129,6 +146,7 @@ class BagiSampahController extends Controller
 
         Penjadwalan::create([
             'total_berat' => $request->total_berat,
+            'supplier_id' => $supplier->id,
             'gambar' => $gambarPath,
             'jadwal_admins_id' => $request->jadwal_admins_id,
             'status' => 'menunggu',

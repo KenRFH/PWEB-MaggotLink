@@ -22,7 +22,7 @@
                     <p>Alamat: {{ $alamat->jalan ?? '-' }}</p>
                     <p>Kecamatan: {{ $alamat->kecamatan->nama ?? '-' }}</p>
                 @else
-                    <p class="text-red-500">Data kerjasama belum tersedia.</p>
+                    <p class="text-red-500">Data profile belum tersedia.</p>
                 @endif
 
             </div>
@@ -68,7 +68,7 @@
                         <input type="text" name="no_telp" value="{{ old('no_telp', optional($user)->no_telp) }}"
                             class="border p-2 rounded w-full" />
                     </div>
-                    
+
                     <div>
                         <label class="block font-semibold">Alamat</label>
                         <input type="text" name="alamat" value="{{ old('alamat', optional($alamat)->jalan) }}"

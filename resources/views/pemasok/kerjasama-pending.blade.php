@@ -5,6 +5,11 @@
 
 @section('content')
 
+    @if ($errors->has('error'))
+        <x-modal-notifikasi :message="$error->first('error')" type="error" />
+    @endif
+
+
 <div class="min-h-screen flex items-center justify-center bg-gray-400/60">
   <div class="bg-white rounded-2xl shadow-md p-10 text-center w-full max-w-md">
     <div class="flex justify-center mb-6">

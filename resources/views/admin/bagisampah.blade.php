@@ -89,7 +89,7 @@
                                 <tr>
                                     <td class="border px-4 py-2">
                                         {{ \Carbon\Carbon::parse($item->jadwalAdmins->tanggal)->format('d M Y') }}</td>
-                                    <td class="border px-4 py-2">{{ $item->detailAlamat->supplier->supplier_id }} </td>
+                                    <td class="border px-4 py-2">{{ $user->detailAlamat->supplier->supplier_id }} </td>
                                     <td class="border px-4 py-2">{{ $item->total_berat }} kg</td>
 
                                     <td class="border px-4 py-2">
