@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JadwalAdmin;
 use App\Models\Kecamatan;
-use App\Models\DetailAlamat;
+use App\Models\Alamat;
 use App\Models\Penjadwalan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -63,21 +63,22 @@ class BagiSampahController extends Controller
             return abort(403, 'Anda tidak terdaftar sebagai supplier.');
         }
 
-        $detailAlamat = DetailAlamat::where('supplier_id', $supplier->id)->first();
-        if (!$detailAlamat) {
+        $alamat = Alamat::where('supplier_id', $supplier->id)->first();
+        if (!$alamat) {
             return redirect()->back()->withErrors(['error' => 'Alamat Anda belum tersedia. Harap lengkapi terlebih dahulu.']);
         }
 
         $jadwalAdminList = JadwalAdmin::whereDate('tanggal', '>=', Carbon::tomorrow())->get();
 
-        $penjadwalanSaya = Penjadwalan::with(['jadwalAdmins', 'detailAlamat'])
-            ->whereHas('detailAlamat', function ($query) use ($supplier) {
-                $query->where('supplier_id', $supplier->id);
-            })
-            ->orderByDesc('created_at')
-            ->get();
+        $penjadwalanSaya = Penjadwalan::with(['supplier.alamat', 'jadwalAdmins'])
+    ->whereHas('supplier.alamat', function ($query) use ($supplier) {
+        $query->where('supplier_id', $supplier->id);
+    })
+    ->orderByDesc('created_at')
+    ->get();
 
-        return view('pemasok.bagisampah', compact('jadwalAdminList', 'penjadwalanSaya', 'detailAlamat'));
+
+        return view('pemasok.bagisampah', compact('jadwalAdminList', 'penjadwalanSaya', 'alamat'));
     }
 
     // ========================
@@ -114,11 +115,7 @@ class BagiSampahController extends Controller
         ]);
 
         $supplier = auth('supplier')->user();
-        $detailAlamat = DetailAlamat::where('supplier_id', $supplier->id)->first();
 
-        if (!$detailAlamat) {
-            return back()->withErrors(['error' => 'Detail alamat tidak ditemukan untuk supplier ini.']);
-        }
 
         $gambarPath = null;
         if ($request->filled('gambar') && Str::startsWith($request->gambar, 'data:image')) {
@@ -134,7 +131,6 @@ class BagiSampahController extends Controller
             'total_berat' => $request->total_berat,
             'gambar' => $gambarPath,
             'jadwal_admins_id' => $request->jadwal_admins_id,
-            'detail_alamat_id' => $detailAlamat->id,
             'status' => 'menunggu',
         ]);
 

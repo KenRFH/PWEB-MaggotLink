@@ -33,12 +33,12 @@
     serverSide: true,
     ajax: '{{ route('admin.kerjasama.data') }}',
     columns: [
-        { data: 'nama', name: 'nama' },
-        { data: 'name_company', name: 'name_company' },
-        { data: 'kecamatan.nama', name: 'kecamatan.nama', defaultContent: '-' },
-        { data: 'status', name: 'status' },
-        { data: 'file_mou_link', name: 'file_mou_link', orderable: false, searchable: false },
-        { data: 'aksi', name: 'aksi', orderable: false, searchable: false }
+        { data: 'nama', name: 'suppliers.nama' },
+        { data: 'name_company', name: 'kerjasama.name_company' },
+        { data: 'kecamatan', name: 'kecamatan.nama', defaultContent: '-' },
+        { data: 'status', name: 'kerjasama.status' },
+        { data: 'file_mou_link', orderable: false, searchable: false },
+        { data: 'aksi', orderable: false, searchable: false }
     ]
 });
 

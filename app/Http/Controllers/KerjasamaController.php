@@ -103,45 +103,54 @@ class KerjasamaController extends Controller
     }
 
     // Untuk admin - DataTables JSON
-    public function getData()
-    {
-        $query = Kerjasama::with('supplier', 'alamat.kecamatan');
+   public function getData()
+{
+    $query = Kerjasama::from('kerja_sama')
+        ->join('supplier', 'kerja_sama.supplier_id', '=', 'supplier.id')
+        ->leftJoin('alamat', 'alamat.supplier_id', '=', 'supplier.id')
+        ->leftJoin('kecamatan', 'alamat.kecamatan_id', '=', 'kecamatan.id')
+        ->select([
+            'kerja_sama.*',
+            'supplier.nama as supplier_nama',
+            'alamat.jalan as alamat_jalan',
+            'kecamatan.nama as kecamatan_nama',
+        ]);
 
-        return DataTables::of($query)
-            ->addColumn('kecamatan', function ($pengajuan) {
-                return optional($pengajuan->alamat->kecamatan)->nama ?? '-';
-            })
-            ->addColumn('aksi', function ($pengajuan) {
-                if ($pengajuan->status === 'pending') {
-                    $approveUrl = route('admin.kerjasama.approve', $pengajuan->id);
-                    $rejectUrl = route('admin.kerjasama.reject', $pengajuan->id);
+    return DataTables::of($query)
+        ->addColumn('nama', fn($row) => $row->supplier_nama)
+        ->addColumn('alamat', fn($row) => $row->alamat_jalan ?? '-')
+        ->addColumn('kecamatan', fn($row) => $row->kecamatan_nama ?? '-')
+        ->addColumn('file_mou_link', fn($row) =>
+            '<a href="'.asset('storage/'.$row->file_mou).'" class="text-blue-500" target="_blank">Lihat PDF</a>'
+        )
+        ->addColumn('aksi', function ($row) {
+            if ($row->status === 'pending') {
+                $approveUrl = route('admin.kerjasama.approve', $row->id);
+                $rejectUrl = route('admin.kerjasama.reject', $row->id);
 
-                    return '
-                        <form action="'.$approveUrl.'" method="POST" class="inline">
-                            '.csrf_field().'
-                            <button type="submit" class="text-green-600">Setujui</button>
-                        </form>
-                        <form action="'.$rejectUrl.'" method="POST" class="inline ml-2">
-                            '.csrf_field().'
-                            <button type="submit" class="text-red-600">Tolak</button>
-                        </form>
-                    ';
-                } else {
-                    return '<span class="text-gray-400 italic">Sudah diproses</span>';
-                }
-            })
-            ->addColumn('file_mou_link', function ($pengajuan) {
-                return '<a href="'.asset('storage/'.$pengajuan->file_mou).'" class="text-blue-500" target="_blank">Lihat PDF</a>';
-            })
-            ->editColumn('status', function ($pengajuan) {
-                return match($pengajuan->status) {
-                    'pending' => '<span class="text-yellow-600">Pending</span>',
-                    'approved' => '<span class="text-green-600">Disetujui</span>',
-                    'rejected' => '<span class="text-red-600">Ditolak</span>',
-                    default => $pengajuan->status,
-                };
-            })
-            ->rawColumns(['aksi', 'file_mou_link', 'status']) // agar HTML tidak di-escape
-            ->make(true);
-    }
+                return '
+                    <form action="'.$approveUrl.'" method="POST" class="inline">
+                        '.csrf_field().'
+                        <button type="submit" class="text-green-600">Setujui</button>
+                    </form>
+                    <form action="'.$rejectUrl.'" method="POST" class="inline ml-2">
+                        '.csrf_field().'
+                        <button type="submit" class="text-red-600">Tolak</button>
+                    </form>
+                ';
+            } else {
+                return '<span class="text-gray-400 italic">Sudah diproses</span>';
+            }
+        })
+        ->editColumn('status', fn($row) => match($row->status) {
+            'pending' => '<span class="text-yellow-600">Pending</span>',
+            'approved' => '<span class="text-green-600">Disetujui</span>',
+            'rejected' => '<span class="text-red-600">Ditolak</span>',
+            default => $row->status,
+        })
+        ->rawColumns(['aksi', 'file_mou_link', 'status'])
+        ->make(true);
+}
+
+
 }
