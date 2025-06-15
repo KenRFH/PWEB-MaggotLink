@@ -5,9 +5,8 @@
 
 @section('content')
 
-    @if ($errors->has('error'))
-        <x-modal-notifikasi :message="$error->first('error')" type="error" />
-    @endif
+   
+
 
 
 <div class="min-h-screen flex items-center justify-center bg-gray-400/60">

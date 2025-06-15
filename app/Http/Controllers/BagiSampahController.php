@@ -23,28 +23,29 @@ class BagiSampahController extends Controller
     // ADMIN VIEW: Lihat Jadwal & Pengajuan
     // ========================
     public function indexAdmin()
-    {
-        $tanggalTerpakai = JadwalAdmin::pluck('tanggal')->toArray();
+{
+    $tanggalTerpakai = JadwalAdmin::pluck('tanggal')->toArray();
 
-        $jadwalDenganJumlah = JadwalAdmin::select(
-                'jadwal_admins.id',
-                'jadwal_admins.tanggal',
-                DB::raw('COUNT(penjadwalan.id) as jumlah_pengambilan')
-            )
-            ->leftJoin('penjadwalan', 'penjadwalan.jadwal_admins_id', '=', 'jadwal_admins.id')
-            ->whereDate('jadwal_admins.tanggal', '>=', Carbon::today())
-            ->groupBy('jadwal_admins.id', 'jadwal_admins.tanggal')
-            ->orderBy('jadwal_admins.tanggal')
-            ->get();
+    $jadwalDenganJumlah = JadwalAdmin::select(
+            'jadwal_admins.id',
+            'jadwal_admins.tanggal',
+            DB::raw('COUNT(penjadwalan.id) as jumlah_pengambilan')
+        )
+        ->leftJoin('penjadwalan', 'penjadwalan.jadwal_admins_id', '=', 'jadwal_admins.id')
+        ->whereDate('jadwal_admins.tanggal', '>=', Carbon::today())
+        ->groupBy('jadwal_admins.id', 'jadwal_admins.tanggal')
+        ->orderBy('jadwal_admins.tanggal')
+        ->get();
 
-        $penjadwalanAll = Penjadwalan::with(['jadwalAdmins', 'supplier'])->get();
+    $penjadwalanAll = Penjadwalan::with(['jadwalAdmins', 'supplier.alamat.kecamatan'])->get();
 
-        return view('admin.bagisampah', compact(
-            'penjadwalanAll',
-            'tanggalTerpakai',
-            'jadwalDenganJumlah'
-        ));
-    }
+    return view('admin.bagisampah', compact(
+        'penjadwalanAll',
+        'tanggalTerpakai',
+        'jadwalDenganJumlah'
+    ));
+}
+
 
     // admin update status
    public function updateStatus(Request $request, $id)

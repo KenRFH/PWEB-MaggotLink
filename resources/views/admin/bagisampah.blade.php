@@ -79,7 +79,7 @@
                                 <th class="border px-4 py-2">Nama</th>
                                 <th class="border px-4 py-2">Berat</th>
 
-                                <th class="border px-4 py-2">Alamat</th>
+                                <th class="border px-4 py-2">Alamat, Kecamatan</th>
                                 <th class="border px-4 py-2">Status</th>
                                 <th class="border px-4 py-2">Ubah</th>
                             </tr>
@@ -88,13 +88,17 @@
                             @foreach ($penjadwalanAll as $item)
                                 <tr>
                                     <td class="border px-4 py-2">
-                                        {{ \Carbon\Carbon::parse($item->jadwalAdmins->tanggal)->format('d M Y') }}</td>
-                                    <td class="border px-4 py-2">{{ $user->detailAlamat->supplier->supplier_id }} </td>
-                                    <td class="border px-4 py-2">{{ $item->total_berat }} kg</td>
-
+                                        {{ \Carbon\Carbon::parse($item->jadwalAdmins->tanggal)->format('d M Y') }}
+                                    </td>
                                     <td class="border px-4 py-2">
-                                        {{ $item->detailAlamat->alamat->jalan ?? '-' }},
-                                        {{ $item->detailAlamat->alamat->kecamatan->nama ?? '-' }}
+                                        {{ $item->supplier->nama ?? '-' }}
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                        {{ $item->total_berat }} kg
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                        {{ $item->supplier->alamat->jalan ?? '-' }},
+                                        {{ $item->supplier->alamat->kecamatan->nama ?? '-' }}
                                     </td>
                                     <td class="border px-4 py-2 font-semibold">
                                         @if ($item->status == 'diproses')
@@ -102,7 +106,6 @@
                                         @else
                                             <span class="text-yellow-600">Pending</span>
                                         @endif
-
                                     </td>
                                     <td class="border px-4 py-2">
                                         @if ($item->status === 'menunggu')
@@ -118,10 +121,10 @@
                                             <span class="text-gray-400 text-sm italic">Sudah diklaim</span>
                                         @endif
                                     </td>
-
                                 </tr>
                             @endforeach
                         </tbody>
+
                     </table>
                 </div>
 

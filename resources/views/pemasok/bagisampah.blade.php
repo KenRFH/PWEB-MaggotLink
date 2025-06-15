@@ -2,7 +2,7 @@
 
 @section('content')
     @include('components.navbar-pemasok')
-    
+
 
     <div class="bg-[#183B4E] flex min-h-screen">
         <main class="flex-1 p-6 md:p-10 bg-cover bg-center"
@@ -35,7 +35,7 @@
                                         <span
                                             class="bg-lime-500 px-2 py-2 rounded-lg text-white font-semibold">Diproses</span>
                                     @else
-                                        <span class="bg-amber-600 text-white font-semibold">Pending</span>
+                                        <span class="bg-amber-600 text-white p-2 rounded-md font-semibold">Pending</span>
                                     @endif
                                 </div>
                             </div>
@@ -110,7 +110,9 @@
             </div>
         </main>
     </div>
-
+@if(session('success'))
+    <x-modal-notifikasi type="success" :message="session('success')" />
+@endif
     @include('components.modal-cam')
 
     <script>
