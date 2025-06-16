@@ -8,10 +8,15 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="h-screen w-screen bg-cover bg-center font-sans"
-    style="background-image: url('{{ asset('assets/login2.jpg') }}');">
+<body class="relative h-screen w-screen font-sans overflow-hidden">
 
-    <div class="w-full h-full inline-flex mr-10 justify-end items-center">
+    <!-- ✅ Gambar Latar (tidak mengganggu form) -->
+    <div class="absolute inset-0 bg-cover bg-center z-0"
+        style="background-image: url('{{ asset('assets/login4.jpg') }}'); filter: brightness(0.6);">
+    </div>
+
+    <!-- ✅ Konten Utama -->
+    <div class="relative z-10 flex justify-center items-center h-full w-full">
         <form method="POST" action="{{ route('postLogin') }}"
             class="bg-white bg-opacity-90 backdrop-blur-md rounded-2xl w-full max-w-md p-10 space-y-6 shadow-lg">
             @csrf
@@ -21,8 +26,7 @@
                 <label for="email" class="block text-gray-700 text-sm mb-2">Email</label>
                 <div class="flex items-center border-b border-gray-400 py-2">
                     <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M16 12H8m8 0l-8 0m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2v-2m12-6a9 9 0 11-18 0 9 9 0 0118 0z"
+                        <path d="M16 12H8m8 0l-8 0m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2v-2m12-6a9 9 0 11-18 0 9 9 0 0118 0z"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <input id="email" name="email" type="email" placeholder="Email" required
@@ -48,7 +52,8 @@
 
             <!-- Tombol Sign In -->
             <div class="flex justify-end">
-                <button type="submit" class="bg-[#1c3124] text-white px-6 py-2 rounded hover:bg-[#16271d] transition">
+                <button type="submit"
+                    class="bg-[#1c3124] text-white px-6 py-2 rounded hover:bg-[#16271d] transition">
                     Sign in
                 </button>
             </div>
@@ -64,32 +69,31 @@
                     </svg>
                 </a>
             </div>
-
-            
-
-
         </form>
     </div>
+
+    <!-- Notifikasi Sukses -->
     @if (session('success'))
         <x-modal-error type="success" :message="session('success')" />
     @endif
 
-    {{-- Notifikasi Gagal --}}
+    <!-- Notifikasi Gagal -->
     @if (session('error'))
         <x-modal-error type="error" :message="session('error')" />
     @endif
 
-
+    <!-- Script Show Password -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const showPasswordCheckbox = document.getElementById('showPassword');
             const passwordInput = document.getElementById('password');
 
-            showPasswordCheckbox.addEventListener('change', function() {
+            showPasswordCheckbox.addEventListener('change', function () {
                 passwordInput.type = this.checked ? 'text' : 'password';
             });
         });
     </script>
+
 </body>
 
 </html>

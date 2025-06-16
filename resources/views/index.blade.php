@@ -13,7 +13,7 @@
         <div>
             <a href="{{ route('showLogin') }}" class="text-xl px-2 py-3 font-bold italic text-white">MaggotLink</a>
         </div>
-        <div class="space-x-6 font-semibold">
+        <div class="space-x-6 font-semibold sm:gap-1">
             <a href="{{ route('showLogin') }}"
                 class="text-white px-4 py-1 hover:bg-white hover:text-green-700 hover:font-bold duration-500 rounded-lg">Login</a>
             <a href="{{ route('showRegis') }}"
@@ -72,7 +72,7 @@
                 <p class="text-black mb-4">Apa kalian tau cara memelihara Maggot dengan benar?</p>
                 <div class="w-full aspect-video">
                     <iframe class="w-full h-full rounded-xl"
-                        src="https://www.youtube.com/embed/UhQfJK2TNTE?si=5WaPjXYRe6909LYd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        src="https://www.youtube.com/embed/FPALstZU7fI?si=o6cG_HAKx2MEtdq4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin" title="Video 1" frameborder="0"
@@ -87,7 +87,7 @@
                 <p class="text-black mb-4">Apa kalian tau cara memelihara Maggot dengan benar?</p>
                 <div class="w-full aspect-video">
                     <iframe class="w-full h-full rounded-xl"
-                        src="https://www.youtube.com/embed/UhQfJK2TNTE?si=5WaPjXYRe6909LYd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        src="https://www.youtube.com/embed/FPALstZU7fI?si=o6cG_HAKx2MEtdq4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin" title="Video 2" frameborder="0"
@@ -102,7 +102,7 @@
                 <p class="text-black mb-4">Apa kalian tau cara memelihara Maggot dengan benar?</p>
                 <div class="w-full aspect-video">
                     <iframe class="w-full h-full rounded-xl"
-                        src="https://www.youtube.com/embed/UhQfJK2TNTE?si=5WaPjXYRe6909LYd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        src="https://www.youtube.com/embed/FPALstZU7fI?si=o6cG_HAKx2MEtdq4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin " title="Video 3" frameborder="0"
