@@ -53,6 +53,7 @@ class ProfileController extends Controller
             'nama' => $request->nama,
             'nama_perusahaan' => $request->nama_perusahaan,
             'no_telp' => $request->no_telp,
+            'gambar' => $request->gambar
         ]);
 
         // Update password jika diisi

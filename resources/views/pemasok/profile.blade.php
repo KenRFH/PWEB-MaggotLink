@@ -7,8 +7,9 @@
 
         <div class="bg-white p-6 rounded-lg shadow-md max-w-xl mx-auto ">
             <div class="flex items-center space-x-6">
-                <img src="{{ $user->gambar ? asset($user->gambar) : 'https://via.placeholder.com/80' }}"
+                <img src="{{ $user->gambar ? asset('storage/' . $user->gambar) : 'https://via.placeholder.com/80' }}"
                     class="w-20 h-20 rounded-xl object-cover" />
+
                 <div>
                     <h2 class="text-xl font-bold">{{ $user->nama ?? $user->name }}</h2>
                     <p class="text-sm text-gray-600">{{ $user->email }}</p>

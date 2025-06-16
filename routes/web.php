@@ -58,6 +58,8 @@ Route::middleware(['auth:supplier'])->group(function () {
 
     // Kerjasama
     Route::get('/kerjasama', [KerjasamaController::class, 'create'])->name('kerjasama');
+
+    Route::get('/kerjasama/reset', [KerjasamaController::class, 'reset'])->name('kerjasama.reset');
     Route::post('/kerjasama', [KerjasamaController::class, 'store'])->name('kerjasama.store');
 });
 

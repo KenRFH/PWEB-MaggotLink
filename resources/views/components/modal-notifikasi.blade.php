@@ -31,8 +31,7 @@
         <p class="text-lg font-semibold text-{{ $color }}-800">{{ $message }}</p>
 
         <!-- Back Button -->
-        <div class="mt-4 text-right">
-            <a href="#" onclick="history.back()" class="text-sm text-{{ $color }}-600 hover:underline">Kembali</a>
-        </div>
+       <a href="{{ url()->previous() }}" class="text-sm text-{{ $color }}-600 hover:underline">Kembali</a>
+
     </div>
 </div>

@@ -32,6 +32,14 @@ class KerjasamaController extends Controller
         return view('pemasok.kerjasama', compact('kecamatanList'));
     }
 
+    public function reset()
+{
+    $userId = auth()->guard('supplier')->id();
+    Kerjasama::where('supplier_id', $userId)->where('status', 'rejected')->delete();
+
+    return redirect()->route('kerjasama');
+}
+
     // Simpan pengajuan kerjasama
     public function store(Request $request)
     {
