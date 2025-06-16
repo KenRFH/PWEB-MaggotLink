@@ -44,7 +44,6 @@ class AuthController extends Controller
         return redirect()->route('dashboard'); // ganti sesuai route admin
     }
 
-    // Jika gagal login di kedua guard
     return back()->withErrors([
         'email' => 'Email atau password salah.',
     ])->onlyInput('email');

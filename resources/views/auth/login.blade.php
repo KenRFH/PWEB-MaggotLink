@@ -65,15 +65,8 @@
                 </a>
             </div>
 
-            {{-- Notifikasi Sukses --}}
-            @if (session('success'))
-                <x-modal-error type="success" :message="session('success')" />
-            @endif
+            
 
-            {{-- Notifikasi Gagal --}}
-            @if (session('error'))
-                <x-modal-error type="error" :message="session('error')" />
-            @endif
 
         </form>
     </div>

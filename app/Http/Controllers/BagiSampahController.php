@@ -89,7 +89,8 @@ class BagiSampahController extends Controller
             $query->where('supplier_id', $supplier->id);
         })
         ->orderByDesc('created_at')
-        ->get();
+        ->paginate(3);
+
 
     return view('pemasok.bagisampah', compact('jadwalAdminList', 'penjadwalanSaya', 'alamat'));
 }

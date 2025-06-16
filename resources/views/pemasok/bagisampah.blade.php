@@ -40,11 +40,13 @@
                                 </div>
                             </div>
                         @endforeach
+                        {{ $penjadwalanSaya->links('components.pagination') }}
+
                     @endif
                 </div>
 
-                {{-- Kanan: form ajukan sampah baru --}}
-                <div class="w-full lg:w-1/3 bg-white p-6 rounded-xl shadow-2xl space-y-4">
+
+                <div class="w-full lg:w-1/3 bg-white p-6 rounded-xl shadow-2xl space-y-4 max-h-[700px] overflow-y-auto">
                     <h3 class="text-lg font-semibold text-center text-black">Ajukan Sampah Baru</h3>
 
                     <form action="{{ route('bagisampah.store') }}" method="POST" enctype="multipart/form-data"
@@ -69,21 +71,20 @@
                             </select>
                         </div>
 
-                        {{-- DAN SETERUSNYA --}}
-
-
+                        {{-- INPUT BERAT --}}
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Total Berat (,00 kg)</label>
                             <input type="number" name="total_berat" id="total_berat" min="0.01" max="100"
                                 step="0.01" class="mt-1 w-full border rounded-lg p-2">
                         </div>
 
+                        {{-- INPUT GAMBAR --}}
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Gambar Sampah</label>
                             <!-- Tombol trigger modal -->
                             <button type="button" onclick="toggleModal(true)"
-                                class="mt-1 w-full min-h-[200px] bg-gray-100 flex justify-center items-center gap-3 rounded-lg p-2 hover:bg-gray-200 text-left">
-                                Ambil Gambar<i data-feather="camera"></i>
+                                class="mt-1 w-full h-[150px] bg-gray-100 flex justify-center items-center gap-3 rounded-lg p-2 hover:bg-gray-200 text-left">
+                                Ambil Gambar <i data-feather="camera"></i>
                             </button>
 
                             <!-- Input hidden untuk simpan base64 -->
@@ -97,22 +98,16 @@
                             class="w-full bg-lime-300 text-white py-2 rounded-lg hover:bg-lime-500 hover:font-bold font-semibold duration-500">
                             Kirim Pengajuan
                         </button>
-
-                        @if ($errors->any())
-                            <div class="text-red-500 mb-4">
-                                @foreach ($errors->all() as $error)
-                                    <p>{{ $error }}</p>
-                                @endforeach
-                            </div>
-                        @endif
                     </form>
                 </div>
+
+
             </div>
         </main>
     </div>
-@if(session('success'))
-    <x-modal-notifikasi type="success" :message="session('success')" />
-@endif
+    @if (session('success'))
+        <x-modal-notifikasi type="success" :message="session('success')" />
+    @endif
     @include('components.modal-cam')
 
     <script>

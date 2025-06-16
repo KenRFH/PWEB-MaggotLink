@@ -15,7 +15,6 @@ class KerjaSama extends Model
 
     protected $fillable = [
         'supplier_id',
-
         'file_mou',
         'catatan',
         'status',
