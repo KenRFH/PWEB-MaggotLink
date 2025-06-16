@@ -31,9 +31,12 @@ class AuthController extends Controller
 
     // Coba login supplier dulu
     if (Auth::guard('supplier')->attempt($credentials)) {
-        $request->session()->regenerate();
-        return redirect()->route('halaman'); // ganti sesuai route supplier
-    }
+    $request->session()->regenerate();
+    return redirect()->route('halaman')->with('success', 'Login berhasil!');
+} else {
+    return back()->with('error', 'Email atau password salah!');
+}
+
 
     // Coba login admin
     if (Auth::guard('admin')->attempt($credentials)) {

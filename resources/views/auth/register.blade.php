@@ -48,17 +48,6 @@
                 <input type="checkbox" id="showPassword" class="mr-2">
                 <label for="showPassword" class="text-sm">Tampilkan kata sandi</label>
 
-                <!-- Nomor Telepon -->
-
-
-                <!-- Nama Perusahaan -->
-
-
-
-
-
-
-                <!-- Tombol Registrasi -->
                 <div class="flex justify-end">
                     <button type="submit"
                         class="bg-[#2d3a2e] text-white px-6 py-2 rounded hover:bg-[#1f291f] transition">
@@ -76,6 +65,16 @@
         </div>
 
     </div>
+
+     @if (session('success'))
+        <x-modal-error type="success" :message="session('success')" />
+    @endif
+
+    {{-- Notifikasi Gagal --}}
+    @if (session('error'))
+        <x-modal-error type="error" :message="session('error')" />
+    @endif
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const showPasswordCheckbox = document.getElementById('showPassword');
