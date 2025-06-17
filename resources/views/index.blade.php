@@ -11,7 +11,7 @@
     <nav
         class="flex sticky items-center justify-between px-8 py-6 bg-[#172C1F] shadow-md top-0 left-0 right-0 transition-all duration-500 z-50">
         <div>
-            <a href="{{ route('showLogin') }}" class="text-xl px-2 py-3 font-bold italic text-white">MaggotLink</a>
+            <a href="{{ route ('showLogin') }}" class="text-xl px-2 py-3 font-bold italic text-white">MaggotLink</a>
         </div>
         <div class="space-x-6 font-semibold sm:gap-1">
             <a href="{{ route('showLogin') }}"
@@ -21,26 +21,26 @@
         </div>
     </nav>
 
-    <section class="relative overflow-hidden py-12 md:py-20">
-        <video autoplay muted loop playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-100">
-            <source src="{{ asset('assets/index_bg.mp4') }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+    <section class="bg-white py-16 px-4 md:px-16">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
 
-        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between px-4 md:px-8">
-            <div class="max-w-xl space-y-4 text-center md:text-left">
-                <h1 class="text-3xl md:text-4xl font-bold text-white shadow-2xl">Menjadi Bagian <br><span
-                        class="text-lime-500">Perubahan Dunia</span></h1>
-                <p class="text-sm md:text-base text-white italic">“Menyenangkan bila tempat tinggal yang kita huni hari
-                    ini masih terjaga dengan baik hingga anak, cucu, dan generasi penerus kita.”</p>
-                <div class="flex justify-center md:justify-start">
-                    <a href="{{ route('showLogin') }}"
-                        class="bg-green-900 text-white px-5 py-2 rounded hover:bg-amber-500 duration-500 hover:font-bold inline-block text-sm md:text-base">Gabung
-                        Sekarang</a>
-                </div>
+            <!-- Gambar -->
+            <div class="w-full md:w-1/2">
+                <img src="{{ asset('assets/indexx.png') }}" alt="Anak Tanam Pohon" class="w-full h-auto">
+            </div>
+
+            <!-- Konten teks -->
+            <div class="w-full md:w-1/2 space-y-4">
+                <h2 class="text-3xl font-bold text-[#345C4A]">Menghidupkan Kembali Lingkungan</h2>
+                <p class="text-[#345C4A] text-lg">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, velit.
+                </p>
+                <a href="{{ route('showRegis') }}"
+                    class="inline-block px-6 py-3 bg-[#345C4A] text-white rounded-lg hover:bg-[#2b4d3d] transition">Coba Daftar</a>
             </div>
         </div>
     </section>
+
 
     <section class="bg-white py-16 px-4 md:px-16">
         <!-- Judul & Gambar Atas -->
@@ -72,8 +72,10 @@
                 <p class="text-black mb-4">Apa kalian tau cara memelihara Maggot dengan benar?</p>
                 <div class="w-full aspect-video">
                     <iframe class="w-full h-full rounded-xl"
-                        src="https://www.youtube.com/embed/FPALstZU7fI?si=o6cG_HAKx2MEtdq4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        src="https://www.youtube.com/embed/FPALstZU7fI?si=o6cG_HAKx2MEtdq4" title="YouTube video player"
                         frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin" title="Video 1" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -87,8 +89,10 @@
                 <p class="text-black mb-4">Apa kalian tau cara memelihara Maggot dengan benar?</p>
                 <div class="w-full aspect-video">
                     <iframe class="w-full h-full rounded-xl"
-                        src="https://www.youtube.com/embed/FPALstZU7fI?si=o6cG_HAKx2MEtdq4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        src="https://www.youtube.com/embed/FPALstZU7fI?si=o6cG_HAKx2MEtdq4" title="YouTube video player"
                         frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin" title="Video 2" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -102,8 +106,10 @@
                 <p class="text-black mb-4">Apa kalian tau cara memelihara Maggot dengan benar?</p>
                 <div class="w-full aspect-video">
                     <iframe class="w-full h-full rounded-xl"
-                        src="https://www.youtube.com/embed/FPALstZU7fI?si=o6cG_HAKx2MEtdq4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        src="https://www.youtube.com/embed/FPALstZU7fI?si=o6cG_HAKx2MEtdq4" title="YouTube video player"
                         frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin " title="Video 3" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

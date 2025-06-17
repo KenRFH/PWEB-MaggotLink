@@ -29,25 +29,20 @@ class AuthController extends Controller
         'password' => 'required|min:6'
     ]);
 
-    // Coba login supplier dulu
-    if (Auth::guard('supplier')->attempt($credentials)) {
+   if (Auth::guard('supplier')->attempt($credentials)) {
     $request->session()->regenerate();
-    return redirect()->route('halaman')->with('success', 'Login berhasil!');
-} else {
-    return back()->with('error', 'Email atau password salah!');
+    return redirect()->route('halaman')->with('success', 'Login sebagai supplier berhasil!');
 }
 
-
-    // Coba login admin
-    if (Auth::guard('admin')->attempt($credentials)) {
-        $request->session()->regenerate();
-        return redirect()->route('dashboard'); // ganti sesuai route admin
-    }
-
-    return back()->withErrors([
-        'email' => 'Email atau password salah.',
-    ])->onlyInput('email');
+if (Auth::guard('admin')->attempt($credentials)) {
+    $request->session()->regenerate();
+    return redirect()->route('dashboard')->with('success', 'Login sebagai admin berhasil!');
 }
+
+return back()->withErrors([
+    'email' => 'Email atau password salah.',
+])->onlyInput('email');}
+
 
 
     public function logout(Request $request)
