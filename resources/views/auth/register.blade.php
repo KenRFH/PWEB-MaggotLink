@@ -13,7 +13,7 @@
 
         <!-- Kiri: Gambar dan Kutipan -->
         <div class="w-1/2 relative bg-cover bg-center"
-            style="background-image: url('https://source.unsplash.com/featured/?larva,insects');">
+            style="background-image: url('{{asset('assets/login4.jpg')}}');">
             <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-10">
                 <p class="text-white text-xl md:text-2xl font-light leading-relaxed text-left">
                     “Bumi tidak mewarisi kita dari nenek moyang kita, kita meminjamnya dari anak cucu kita.”
@@ -22,7 +22,7 @@
         </div>
 
         <!-- Kanan: Formulir -->
-        <div class="w-1/2 bg-[#2d3a2e] flex items-center justify-center">
+        <div class="w-1/2 bg-white flex items-center justify-center">
             <form method="POST" action="{{ route('register.register') }}"
                 class="bg-white w-full max-w-md p-10 rounded-2xl space-y-6">
                 @csrf
@@ -65,6 +65,10 @@
         </div>
 
     </div>
+    <a href="{{ route('beranda') }}"
+        class="absolute bottom-4 right-4 text-sm text-red-500  hover:bg-red-500 hover:text-white px-2 py-1 rounded-md duration-500 flex items-center gap-1">
+        ← Kembali ke Beranda
+    </a>
 
      @if (session('success'))
         <x-modal-error type="success" :message="session('success')" />
@@ -74,7 +78,7 @@
     @if (session('error'))
         <x-modal-error type="error" :message="session('error')" />
     @endif
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const showPasswordCheckbox = document.getElementById('showPassword');

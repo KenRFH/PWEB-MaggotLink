@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 // GUEST / PUBLIC ROUTES
 // =====================
 
-Route::get('/', fn () => view('index'));
+Route::get('/', fn () => view('index'))->name('beranda');
 
 Route::get('/register', [AuthController::class, 'showRegis'])->name('showRegis');
 Route::post('/register', [AuthController::class, 'register'])->name('register.register');
