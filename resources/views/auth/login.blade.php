@@ -11,6 +11,7 @@
 <body class="h-screen w-screen font-sans overflow-hidden bg-white">
     <div class="flex h-full">
 
+        
         <!-- ✅ Kolom Kiri: Gambar (75%) -->
         <div class="w-1/2 h-full bg-cover bg-center"
             style="background-image: url('{{ asset('assets/login4.jpg') }}'); filter: brightness(0.85);">
