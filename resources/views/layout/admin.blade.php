@@ -20,6 +20,9 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script src="//unpkg.com/alpinejs" defer></script>
+
 @stack('scripts')
 </body>
 

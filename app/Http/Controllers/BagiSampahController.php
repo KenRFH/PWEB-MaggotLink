@@ -19,9 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 class BagiSampahController extends Controller
 {
-    // ========================
-    // ADMIN VIEW: Lihat Jadwal & Pengajuan
-    // ========================
+
     public function indexAdmin()
 {
     $tanggalTerpakai = JadwalAdmin::pluck('tanggal')->toArray();
@@ -47,19 +45,17 @@ class BagiSampahController extends Controller
 }
 
 
-    // admin update status
+
    public function updateStatus(Request $request, $id)
 {
     $penjadwalan = Penjadwalan::findOrFail($id);
-    $penjadwalan->status = 'diproses'; // ubah dari 'menunggu' ke 'diproses'
+    $penjadwalan->status = 'diproses';
     $penjadwalan->save();
 
     return redirect()->back()->with('success', 'Status berhasil diperbarui.');
 }
 
-    // ========================
-    // SUPPLIER VIEW
-    // ========================
+
     public function indexSupplier()
 {
     $supplier = auth('supplier')->user();
@@ -67,7 +63,7 @@ class BagiSampahController extends Controller
         return abort(403, 'Anda tidak terdaftar sebagai supplier.');
     }
 
-    // Cek status pengajuan kerjasama
+
     $pengajuan = Kerjasama::where('supplier_id', $supplier->id)->latest()->first();
 
         if (!$pengajuan || $pengajuan->status !== 'approved') {
@@ -96,9 +92,7 @@ class BagiSampahController extends Controller
 }
 
 
-    // ========================
-    // ADMIN - Menyimpan Tanggal Jadwal
-    // ========================
+
     public function jadwalStore(Request $request)
     {
        $admin = auth('admin')->user();
@@ -122,13 +116,11 @@ class BagiSampahController extends Controller
         return redirect()->route('admin.bagisampah')->with('success', 'Tanggal berhasil disimpan.');
     }
 
-    // ========================
-    // SUPPLIER - Menyimpan Pengajuan Penjadwalan
-    // ========================
+
     public function store(Request $request)
     {
         $request->validate([
-            'gambar' => 'nullable|string',
+            'gambar' => 'required|string',
             'total_berat' => 'required|numeric|min:0.01',
             'jadwal_admins_id' => 'required|exists:jadwal_admins,id',
         ]);
@@ -157,9 +149,7 @@ class BagiSampahController extends Controller
         return redirect()->back()->with('success', 'Pengajuan penjadwalan berhasil disimpan.');
     }
 
-    // ========================
-    // SUPPLIER - Hapus Jadwal
-    // ========================
+
 
 }
 

@@ -3,8 +3,7 @@
 @section('content')
     @include('components.navbar-admin')
     <div class="flex min-h-screen bg-gray-50">
-        <main class="flex-1 p-6 md:p-10 bg-cover bg-center"
-            style="background-image: url('{{ asset('assets/bagi-sampah.png') }}');">
+        <main class="flex-1 p-6 md:p-10 bg-cover bg-center">
             <div class="flex flex-col lg:flex-row gap-10">
                 {{-- Tabel Jadwal Admin --}}
                 <div class="flex-1 bg-white rounded-xl shadow-lg p-6 max-h-[600px] overflow-auto">
@@ -78,10 +77,9 @@
                                 <th class="border px-4 py-2">Tanggal</th>
                                 <th class="border px-4 py-2">Nama</th>
                                 <th class="border px-4 py-2">Berat</th>
-
                                 <th class="border px-4 py-2">Alamat, Kecamatan</th>
                                 <th class="border px-4 py-2">Status</th>
-                                <th class="border px-4 py-2">Ubah</th>
+                                <th class="border px-4 py-2">Konfirmasi</th> <!-- Kolom khusus tombol konfirmasi -->
                             </tr>
                         </thead>
                         <tbody>
@@ -100,40 +98,43 @@
                                         {{ $item->supplier->alamat->jalan ?? '-' }},
                                         {{ $item->supplier->alamat->kecamatan->nama ?? '-' }}
                                     </td>
-                                    <td class="border px-4 py-2 font-semibold">
-                                        @if ($item->status == 'diproses')
-                                            <span class="text-green-600">Diproses</span>
+                                    <td class="border px-4 py-2">
+                                        @if ($item->status === 'menunggu')
+                                            <span class="text-yellow-600 font-medium">Menunggu</span>
                                         @else
-                                            <span class="text-yellow-600">Pending</span>
+                                            <span class="text-green-600 font-medium">Sudah Diklaim</span>
                                         @endif
                                     </td>
                                     <td class="border px-4 py-2">
                                         @if ($item->status === 'menunggu')
-                                            <form action="{{ route('bagisampah.updateStatus', $item->id) }}" method="POST"
-                                                onsubmit="return confirm('Konfirmasi penjadwalan ini?')">
-                                                @csrf
-                                                <button type="submit"
-                                                    class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm">
-                                                    Konfirmasi Penjadwalan
-                                                </button>
-                                            </form>
+                                            <button
+    type="button"
+    x-data
+    x-on:click="$dispatch('open-konfirmasi', { id: {{ $item->id }} })"
+    class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm">
+    Konfirmasi
+</button>
+
                                         @else
-                                            <span class="text-gray-400 text-sm italic">Sudah diklaim</span>
+                                            <span class="text-gray-400 text-sm italic">-</span>
                                         @endif
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
-
                     </table>
                 </div>
+
+
 
 
             </div>
 
         </main>
-    </div>
 
+
+    </div>
+    <x-modal-konfirmasi />
 
 
     @push('scripts')

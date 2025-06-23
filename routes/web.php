@@ -8,9 +8,7 @@ use App\Http\Controllers\BagiSampahController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-// =====================
-// GUEST / PUBLIC ROUTES
-// =====================
+
 
 Route::get('/', fn () => view('index'))->name('beranda');
 
@@ -23,9 +21,6 @@ Route::post('/login', [AuthController::class, 'login'])->name('postLogin');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-// =====================
-// ADMIN ROUTES
-// =====================
 
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'showDash'])->name('dashboard');
@@ -44,9 +39,6 @@ Route::middleware(['auth:admin'])->group(function () {
 });
 
 
-// =====================
-// SUPPLIER ROUTES
-// =====================
 
 Route::middleware(['auth:supplier'])->group(function () {
     Route::get('/halaman', [HalamanController::class, 'showForm'])->name('halaman');
@@ -64,9 +56,7 @@ Route::middleware(['auth:supplier'])->group(function () {
 });
 
 
-// =====================
-// SHARED ROUTES (ADMIN + SUPPLIER)
-// =====================
+
 
 Route::middleware(['auth:admin,supplier'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'showForm'])->name('profile');
