@@ -107,14 +107,11 @@
                                     </td>
                                     <td class="border px-4 py-2">
                                         @if ($item->status === 'menunggu')
-                                            <button
-    type="button"
-    x-data
-    x-on:click="$dispatch('open-konfirmasi', { id: {{ $item->id }} })"
-    class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm">
-    Konfirmasi
-</button>
-
+                                            <button type="button" x-data
+                                                x-on:click="$dispatch('open-konfirmasi', { id: {{ $item->id }} })"
+                                                class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm">
+                                                Konfirmasi
+                                            </button>
                                         @else
                                             <span class="text-gray-400 text-sm italic">-</span>
                                         @endif
