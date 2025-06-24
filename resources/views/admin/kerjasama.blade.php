@@ -10,7 +10,7 @@
         <tr>
             <th>Nama</th>
             <th>Perusahaan</th>
-            <th>Alamat</th> {{-- diganti dari Kecamatan --}}
+            <th>Alamat</th> 
             <th>Status</th>
             <th>File MOU</th>
             <th>Aksi</th>
@@ -32,7 +32,7 @@
             columns: [
                 { data: 'nama', name: 'supplier.nama' },
                 { data: 'nama_perusahaan', name: 'supplier.nama_perusahaan' },
-                { data: 'alamat', name: 'alamat.jalan', defaultContent: '-' }, // diganti dari kecamatan
+                { data: 'alamat', name: 'alamat.jalan', defaultContent: '-' },
                 { data: 'status', name: 'kerja_sama.status' },
                 { data: 'file_mou_link', orderable: false, searchable: false },
                 { data: 'aksi', orderable: false, searchable: false }

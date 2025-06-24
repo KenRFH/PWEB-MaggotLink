@@ -22,7 +22,7 @@ class AdminSeeder extends Seeder
         Admin::insert([
             'nama' => 'Admin Utama',
             'email' => 'admin@test',
-            'password' => Hash::make('password123'), // enkripsi password
+            'password' => Hash::make('password123'), 
             'address' => 'Jl. Contoh No. 123',
             'gambar' => '',
             'phone_number' => '081234567890',

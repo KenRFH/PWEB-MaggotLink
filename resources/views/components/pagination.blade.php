@@ -1,7 +1,7 @@
 @if ($paginator->hasPages())
     <nav class="flex justify-center mt-6">
         <ul class="flex items-center space-x-2 text-sm">
-            {{-- Tombol Sebelumnya --}}
+
             @if ($paginator->onFirstPage())
                 <li>
                     <span class="px-3 py-1 bg-gray-300 text-white rounded-lg cursor-not-allowed">«</span>
@@ -38,7 +38,7 @@
                 @endif
             @endforeach
 
-            {{-- Tombol Selanjutnya --}}
+            
             @if ($paginator->hasMorePages())
                 <li>
                     <a href="{{ $paginator->nextPageUrl() }}"

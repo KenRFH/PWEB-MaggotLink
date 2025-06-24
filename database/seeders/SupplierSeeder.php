@@ -23,7 +23,7 @@ class SupplierSeeder extends Seeder
          echo "Seeder jalan!\n";
         Supplier::insert([
             'email' => 'user@test',
-            'password' => Hash::make('password123'), // enkripsi password
+            'password' => Hash::make('password123'), 
             'gambar' => '',
             'nama' => 'ken',
             'no_telp' => '',

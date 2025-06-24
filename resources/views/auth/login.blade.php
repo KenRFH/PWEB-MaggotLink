@@ -10,9 +10,6 @@
 
 <body class="h-screen w-screen font-sans overflow-hidden bg-white">
     <div class="flex h-full">
-
-        
-        <!-- ✅ Kolom Kiri: Gambar (75%) -->
         <div class="w-1/2 h-full bg-cover bg-center"
             style="background-image: url('{{ asset('assets/login4.jpg') }}'); filter: brightness(0.85);">
              <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-10">
@@ -22,12 +19,11 @@
             </div>
         </div>
 
-        <!-- ✅ Kolom Kanan: Form Login (25%) -->
+
         <div class="w-1/2 flex items-center justify-center p-8 bg-white">
             <form method="POST" action="{{ route('postLogin') }}" class="w-full space-y-6 max-w-[90%]">
                 @csrf
 
-                <!-- Email -->
                 <div>
                     <label for="email" class="block text-gray-700 text-sm mb-2">Email</label>
                     <div class="flex items-center border-b border-gray-400 py-2">
@@ -42,7 +38,7 @@
                     </div>
                 </div>
 
-                <!-- Password -->
+
                 <div>
                     <label for="password" class="block text-gray-700 text-sm mb-2">Password</label>
                     <div class="flex items-center border-b border-gray-400 py-2">
@@ -59,7 +55,7 @@
                     </div>
                 </div>
 
-                <!-- Tombol Sign In -->
+
                 <div class="flex justify-end">
                     <button type="submit"
                         class="bg-[#1c3124] text-white px-6 py-2 rounded hover:bg-[#16271d] transition">
@@ -67,7 +63,7 @@
                     </button>
                 </div>
 
-                <!-- Register Link -->
+
                 <div class="text-sm text-gray-600 flex items-center justify-end gap-1">
                     <span>Belum punya akun?</span>
                     <a href="{{ route('showRegis') }}" class="text-[#1c3124] hover:underline flex items-center gap-1">
@@ -99,7 +95,6 @@
         <x-modal-error type="error" :message="session('error')" />
     @endif
 
-    <!-- Show Password Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const showPasswordCheckbox = document.getElementById('showPassword');

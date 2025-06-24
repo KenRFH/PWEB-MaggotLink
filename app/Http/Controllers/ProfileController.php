@@ -48,7 +48,7 @@ class ProfileController extends Controller
             'gambar' => 'nullable|image|max:2048',
         ]);
 
-        // Update data supplier
+      
         $user->update([
             'nama' => $request->nama,
             'nama_perusahaan' => $request->nama_perusahaan,
@@ -56,7 +56,7 @@ class ProfileController extends Controller
             'gambar' => $request->gambar
         ]);
 
-        // Update password jika diisi
+
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
@@ -69,7 +69,6 @@ class ProfileController extends Controller
 
         $user->save();
 
-        // Simpan atau update alamat berdasarkan supplier_id
         Alamat::updateOrCreate(
             ['supplier_id' => $user->id],
             [

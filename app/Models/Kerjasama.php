@@ -20,7 +20,7 @@ class KerjaSama extends Model
         'status',
     ];
 
-    // Relasi ke user (pemilik pengajuan)
+    
     public function supplier()
 {
     return $this->belongsTo(Supplier::class);

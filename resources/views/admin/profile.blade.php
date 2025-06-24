@@ -41,7 +41,7 @@
 
                     <div>
                         <label class="block font-semibold">Nama</label>
-                        <input type="text" name="nama" {{-- ← ganti dari name_company ke nama --}} value="{{ old('nama', $user->nama) }}"
+                        <input type="text" name="nama" value="{{ old('nama', $user->nama) }}"
                             class="border p-2 rounded w-full" />
                     </div>
 

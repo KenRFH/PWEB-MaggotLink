@@ -11,7 +11,7 @@
 <body class="bg-[#2d3a2e] h-screen w-screen m-0 p-0 overflow-hidden font-sans">
     <div class="flex h-full w-full">
 
-        <!-- Kiri: Gambar dan Kutipan -->
+
         <div class="w-1/2 relative bg-cover bg-center"
             style="background-image: url('{{asset('assets/login4.jpg')}}');">
             <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-10">
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <!-- Kanan: Formulir -->
+
         <div class="w-1/2 bg-white flex items-center justify-center">
             <form method="POST" action="{{ route('register.register') }}"
                 class="bg-white w-full max-w-md p-10 rounded-2xl space-y-6">
@@ -55,7 +55,7 @@
                     </button>
                 </div>
 
-                <!-- Teks Sudah Punya Akun di bawah tombol -->
+            
                 <div class="text-center mt-4">
                     <a href="{{ route('showLogin') }}" class="text-gray-600 text-sm hover:underline">Sudah punya
                         akun?</a>

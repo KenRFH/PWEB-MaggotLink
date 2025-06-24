@@ -11,8 +11,6 @@
     $icons = [
         'success' => asset('assets/success.svg'),
         'error' => asset('assets/error.svg'),
-        // 'info' => asset('assets/info.svg'),
-        // 'warning' => asset('assets/warning.svg'),
     ];
 
     $color = $colors[$type] ?? 'green';

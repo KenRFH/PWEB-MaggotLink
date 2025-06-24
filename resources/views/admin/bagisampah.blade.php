@@ -79,7 +79,7 @@
                                 <th class="border px-4 py-2">Berat</th>
                                 <th class="border px-4 py-2">Alamat, Kecamatan</th>
                                 <th class="border px-4 py-2">Status</th>
-                                <th class="border px-4 py-2">Konfirmasi</th> <!-- Kolom khusus tombol konfirmasi -->
+                                <th class="border px-4 py-2">Konfirmasi</th> 
                             </tr>
                         </thead>
                         <tbody>
